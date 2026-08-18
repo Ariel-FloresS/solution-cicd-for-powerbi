@@ -5,6 +5,12 @@ name: Scope
 on:
 
   workflow_call:
+    
+    inputs:
+      base_ref:
+        description: Comparison ref. Use origin/<base> on a pull request, HEAD~1 on main.
+        required: true
+        type: string
 
     outputs:
 
@@ -38,7 +44,7 @@ jobs:
       reports: ${{ steps.detect.outputs.reports }}
 
     steps:
-      
+
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
