@@ -23,7 +23,7 @@ jobs:
 
     scope:
 
-        uses: ./.github/workflows/scope.yml
+        uses: ./.github/workflows/scope.yaml
         with:
             base_ref: origin/${{ github.base_ref }}
 
