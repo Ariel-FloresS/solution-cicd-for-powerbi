@@ -1,0 +1,52 @@
+name: Scope
+
+
+
+on:
+
+  workflow_call:
+
+    inputs:
+      base_ref:
+        description: Comparison ref. Use origin/<base> on a pull request, HEAD~1 on main.
+        required: true
+        type: string
+
+    outputs:
+      workspace:
+        description: Name of the single workspace folder the pull request touched.
+        value: ${{ jobs.scope.outputs.workspace }}
+
+      has_changes:
+        description: String flag, 'true' or 'false'. Compare against the quoted string.
+        value: ${{ jobs.scope.outputs.has_changes }}
+
+      semantic_models:
+        description: JSON array of changed .SemanticModel paths. Unwrap with fromJson.
+        value: ${{ jobs.scope.outputs.semantic_models }}
+
+      reports:
+        description: JSON array of changed .Report paths. Unwrap with fromJson.
+        value: ${{ jobs.scope.outputs.reports }}
+
+
+
+jobs:
+  scope:
+    name: Detect changed items
+    runs-on: ubuntu-latest
+
+    outputs:
+      workspace: ${{ steps.detect.outputs.workspace }}
+      has_changes: ${{ steps.detect.outputs.has_changes }}
+      semantic_models: ${{ steps.detect.outputs.semantic_models }}
+      reports: ${{ steps.detect.outputs.reports }}
+
+    steps:
+      - uses: ./.github/actions/checkout_and_uv_sync
+        with:
+          fetch-depth: "0"
+
+      - name: Detect changed Power BI items
+        id: detect
+        run: uv run python -m pbi_cicd.rules.scope --base ${{ inputs.base_ref }}
