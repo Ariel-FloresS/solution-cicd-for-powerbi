@@ -17,7 +17,7 @@ from pathlib import Path, PurePosixPath
 from pbi_cicd.infrastructure.output import annotate_error, write_outputs, print_summary, annotate_warning
 from pbi_cicd.infrastructure.git import changed_files,deleted_files
 from pbi_cicd.infrastructure.errors import PipelineError, RuleViolation, PbiCicdError
-from pbi_cicd.models import ITEM_SUFFIXES, ChangeSet, Item,
+from pbi_cicd.models import ITEM_SUFFIXES, ChangeSet, Item
 
 
 # Identity file Power BI Desktop writes inside every item folder.
@@ -164,7 +164,7 @@ def main(argv: list[str] | None = None) -> int:
     args: argparse.Namespace = parser.parse_args(argv)
  
     try:
-        changes: ChangeSet = resolve(git.changed_files(args.base, args.repo_root))
+        changes: ChangeSet = resolve(changed_files(args.base, args.repo_root))
         verify(changes, args.repo_root)
         removed: list[Item] = resolve_removed(
             deleted_files(args.base, args.repo_root)

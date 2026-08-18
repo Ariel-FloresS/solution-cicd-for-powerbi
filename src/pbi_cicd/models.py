@@ -2,7 +2,7 @@
 Domain models shared by every rule.
 """
 from dataclasses import dataclass, field
-from pbi_cicd.errors import PipelineError
+from pbi_cicd.infrastructure.errors import PipelineError
 
 # Folder suffixes that mark a Fabric item, per the PBIP layout:https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-overview
 ITEM_SUFFIXES: tuple[str, str] = (".Report", ".SemanticModel")
