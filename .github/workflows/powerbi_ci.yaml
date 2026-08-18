@@ -24,8 +24,7 @@ jobs:
     scope:
 
         uses: ./.github/workflows/scope.yaml
-        with:
-            base_ref: origin/${{ github.base_ref }}
+       
 
     echo-scope:
         runs-on: ubuntu-latest

@@ -1,0 +1,19 @@
+name: Install uv and sync dependencies
+description: >
+  Installs uv and syncs the locked environment. The repository must
+  already be checked out: a local action cannot check out the repo it
+  is loaded from.
+
+runs:
+  using: composite
+
+  steps:
+  
+    - name: Install uv
+      uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d
+      with:
+        enable-cache: true
+
+    - name: Sync dependencies
+      shell: bash
+      run: uv sync --locked

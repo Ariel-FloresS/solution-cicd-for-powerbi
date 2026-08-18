@@ -6,13 +6,8 @@ on:
 
   workflow_call:
 
-    inputs:
-      base_ref:
-        description: Comparison ref. Use origin/<base> on a pull request, HEAD~1 on main.
-        required: true
-        type: string
-
     outputs:
+
       workspace:
         description: Name of the single workspace folder the pull request touched.
         value: ${{ jobs.scope.outputs.workspace }}
@@ -43,10 +38,14 @@ jobs:
       reports: ${{ steps.detect.outputs.reports }}
 
     steps:
-      - uses: ./.github/actions/checkout_and_uv_sync
+      
+      - name: Checkout repository
+        uses: actions/checkout@v7
         with:
-          fetch-depth: "0"
+          fetch-depth: 0
 
+      - uses: ./.github/actions/uv_sync
+        
       - name: Detect changed Power BI items
         id: detect
         run: uv run python -m pbi_cicd.rules.scope --base ${{ inputs.base_ref }}
