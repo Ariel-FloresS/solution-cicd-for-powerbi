@@ -1,0 +1,64 @@
+name: Validate the .pbip Artefacts
+run-name: Validate PowerBI Artefacts
+
+
+
+on:
+  workflow_call:
+
+    inputs:
+
+      workspace:
+        description: Name of the single workspace folder the pull request touched.
+        type: string
+        required: true
+
+      semantic_models:
+        description: JSON array of changed .SemanticModel paths.
+        type: string
+        required: true
+
+      reports:
+        description: JSON array of changed .Report paths.
+        type: string
+        required: true
+
+
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    
+    env:
+      WORKSPACE: ${{ inputs.workspace }}
+      SEMANTIC_MODELS: ${{ inputs.semantic_models }}
+      REPORTS: ${{ inputs.reports }}
+
+    steps:
+     
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - uses: ./.github/actions/uv_sync
+
+     
+      # last. Every step carries if: always() so one failure does not
+      # hide the rest — the author fixes everything in one push instead
+      # of discovering problems one at a time.
+      
+      - name: "Rule 4: item folder names must use safe characters"
+        run: |
+          uv run python -m pbi_cicd.rules.naming \
+            --models "$SEMANTIC_MODELS" \
+            --reports "$REPORTS"
+
+      - name: "Rule 5: display names must be unique within a workspace"
+        if: always()
+        run: uv run python -m pbi_cicd.rules.identity --workspace "$WORKSPACE"
+
+      - name: "Rule 6: semantic models must not read from local paths"
+        if: always()
+        run: uv run python -m pbi_cicd.rules.sources --models "$SEMANTIC_MODELS"
