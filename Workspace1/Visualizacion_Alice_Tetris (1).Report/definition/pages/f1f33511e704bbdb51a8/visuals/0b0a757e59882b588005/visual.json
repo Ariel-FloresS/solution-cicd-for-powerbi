@@ -1,0 +1,144 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "0b0a757e59882b588005",
+  "position": {
+    "x": 691.11111111111109,
+    "y": 101.11111111111111,
+    "z": 8000,
+    "height": 597.77777777777771,
+    "width": 580,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "stackedbardiagram65644A82C514E21AA5C39603C83AC366",
+    "query": {
+      "queryState": {
+        "x_data": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Base3D"
+                    }
+                  },
+                  "Property": "CordX"
+                }
+              },
+              "queryRef": "Base3D.CordX",
+              "nativeQueryRef": "CordX",
+              "format": "0"
+            }
+          ]
+        },
+        "z_data": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Base3D"
+                    }
+                  },
+                  "Property": "CordZ"
+                }
+              },
+              "queryRef": "Base3D.CordZ",
+              "nativeQueryRef": "CordZ",
+              "format": "0"
+            }
+          ]
+        },
+        "y_data": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Base3D"
+                    }
+                  },
+                  "Property": "CordY"
+                }
+              },
+              "queryRef": "Base3D.CordY",
+              "nativeQueryRef": "CordY",
+              "format": "0"
+            }
+          ]
+        },
+        "group_data": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Base3D"
+                    }
+                  },
+                  "Property": "CordZ"
+                }
+              },
+              "queryRef": "Base3D.CordZ",
+              "nativeQueryRef": "CordZ",
+              "format": "0"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "5D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

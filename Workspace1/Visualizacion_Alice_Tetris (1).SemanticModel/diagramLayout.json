@@ -1,0 +1,87 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 31.494417777777741
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 657.854833217487,
+            "y": 593.51112972055466
+          },
+          "nodeIndex": "DIM Plantas",
+          "nodeLineageTag": "e3ead746-84da-401f-9700-b7b49b547794",
+          "size": {
+            "height": 202.93925160871015,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 99.999999999999972,
+            "y": 14.999999999999854
+          },
+          "nodeIndex": "REPORT AlmacenTC",
+          "nodeLineageTag": "0e51bf43-7f7f-4fbd-b51a-362dc285a1b5",
+          "size": {
+            "height": 408.88888888888897,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 426.18230720534893,
+            "y": 357.33328680972375
+          },
+          "nodeIndex": "REPORT VL06F",
+          "nodeLineageTag": "60cdc42a-bf73-48d2-abae-999a70c90133",
+          "size": {
+            "height": 189.5704675530211,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 70.702225944110978,
+            "y": 699.07553632579686
+          },
+          "nodeIndex": "REPORT ADI",
+          "nodeLineageTag": "dc6259f9-0e32-40f6-a6fd-f1e96468edd8",
+          "size": {
+            "height": 306.44444444444446,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 374.754154301454,
+            "y": 635.93181111784713
+          },
+          "nodeIndex": "Base3D",
+          "nodeLineageTag": "a3493a7a-db07-4307-81c0-f6ece12b6bbd",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 50.802653704840026,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

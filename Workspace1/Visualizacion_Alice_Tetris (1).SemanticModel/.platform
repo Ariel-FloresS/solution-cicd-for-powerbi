@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Visualizacion_Alice_Tetris (1)"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "fa78ad62-03c4-45d6-a95c-602d3cb6b0c3"
+  }
+}

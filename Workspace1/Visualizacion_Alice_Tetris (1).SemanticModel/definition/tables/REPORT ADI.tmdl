@@ -1,0 +1,107 @@
+table 'REPORT ADI'
+	lineageTag: dc6259f9-0e32-40f6-a6fd-f1e96468edd8
+
+	measure Measure =
+			IF(
+			    NOT(ISBLANK(SELECTEDVALUE('REPORT ADI'[Carga_TM]))),
+			    SELECTEDVALUE('REPORT ADI'[Grupo]),
+			    BLANK()
+			)
+		lineageTag: eee59dbd-ca88-4c82-b1d1-14021f607a3e
+
+	column Material
+		dataType: string
+		lineageTag: 3b28ef1e-a05d-4600-9d6b-85678a3bf488
+		summarizeBy: none
+		sourceColumn: Material
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grupo
+		dataType: string
+		lineageTag: 7013e2b9-63b5-4153-a240-941c6bafd051
+		summarizeBy: none
+		sourceColumn: Grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Columna
+		dataType: string
+		lineageTag: 2e13a17a-6d9f-4dfa-a1be-0c9346f9946f
+		summarizeBy: none
+		sourceColumn: Columna
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fila
+		dataType: int64
+		formatString: 0
+		lineageTag: c7229d96-2545-47ff-b899-f922e070c75d
+		summarizeBy: sum
+		sourceColumn: Fila
+
+		annotation SummarizationSetBy = Automatic
+
+	column Capa
+		dataType: int64
+		formatString: 0
+		lineageTag: 6c1bd2e9-24d4-4fc2-bdaa-20a8dd90891e
+		summarizeBy: sum
+		sourceColumn: Capa
+
+		annotation SummarizationSetBy = Automatic
+
+	column Carga_TM
+		dataType: string
+		lineageTag: dd2f96b9-bc41-4b6c-a9fb-7ac088ff2170
+		summarizeBy: none
+		sourceColumn: Carga_TM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Descripcion_Material
+		dataType: string
+		lineageTag: 80300780-fb5b-4741-b67c-e02628f04c1a
+		summarizeBy: none
+		sourceColumn: Descripcion_Material
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fecha_actualizacion
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6474d15e-052b-44f7-abe1-37f50c94e678
+		summarizeBy: none
+		sourceColumn: Fecha_actualizacion
+
+		variation Variación
+			isDefault
+			relationship: 14b36dfe-c506-43e6-a112-2af5355ef2e7
+			defaultHierarchy: LocalDateTable_974423dd-7995-4de0-84b5-4292a863c0fe.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'REPORT ADI' = m
+		mode: import
+		source = ```
+				let
+				    Source = Databricks.Catalogs("adb-2535968928252539.19.azuredatabricks.net", "sql/protocolv1/o/2535968928252539/1002-023341-h6v2iz40", [Catalog="nams_mx_corporate_prod", Database="sc_gold", EnableAutomaticProxyDiscovery="enabled"]),
+				    tb_sc_mx_tetris_algorithm_sc_gold_nams_mx_corporate_prod = Source{[Item="tb_sc_mx_tetris_algorithm", Schema="sc_gold", Catalog="nams_mx_corporate_prod"]}[Data],
+				    #"Filas filtradas1" = Table.SelectRows(tb_sc_mx_tetris_algorithm_sc_gold_nams_mx_corporate_prod, each true),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Filas filtradas1", {{"Columna", type text}}),
+				    #"Valor reemplazado" = Table.ReplaceValue(#"Tipo cambiado", "1", "Izquierda", Replacer.ReplaceText, {"Columna"}),
+				    #"Valor reemplazado1" = Table.ReplaceValue(#"Valor reemplazado", "2", "Derecha", Replacer.ReplaceText, {"Columna"}),
+				    #"Rename Columns" = Table.RenameColumns(#"Valor reemplazado1", {
+				        {"CargaTM", "Carga_TM"},
+				        {"DescripcionMaterial", "Descripcion_Material"},
+				        {"FechaActualizacion", "Fecha_actualizacion"}
+				    }),
+				    #"Filas filtradas" = Table.SelectRows(#"Rename Columns", each true) 
+				in
+				    #"Filas filtradas"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,504 @@
+table 'REPORT VL06F'
+	lineageTag: 60cdc42a-bf73-48d2-abae-999a70c90133
+
+	column Delivery
+		dataType: string
+		lineageTag: c793facf-eed5-43c0-846b-d25b928e6ca5
+		summarizeBy: none
+		sourceColumn: Delivery
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShipToDsc
+		dataType: string
+		lineageTag: 0638488e-240d-49fa-b66c-cb514511c83c
+		summarizeBy: none
+		sourceColumn: ShipToDsc
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShipTo
+		dataType: string
+		lineageTag: e1fa5184-b0dc-472d-beae-ec28e7638077
+		summarizeBy: none
+		sourceColumn: ShipTo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShipToLocation
+		dataType: string
+		lineageTag: afd3b333-918d-4562-a26b-864390a96a57
+		summarizeBy: none
+		sourceColumn: ShipToLocation
+
+		annotation SummarizationSetBy = Automatic
+
+	column Material
+		dataType: string
+		lineageTag: 0be6fbb7-9ddf-41af-a9fb-9db1dfb2ecfa
+		summarizeBy: none
+		sourceColumn: Material
+
+		annotation SummarizationSetBy = Automatic
+
+	column MaterialDsc
+		dataType: string
+		lineageTag: beecac1c-536b-47b8-8bf4-9d3b961e5d62
+		summarizeBy: none
+		sourceColumn: MaterialDsc
+
+		annotation SummarizationSetBy = Automatic
+
+	column PurchasingDoc
+		dataType: string
+		lineageTag: 3f573ecb-e5cf-4a95-ab4d-cf10c396ad43
+		summarizeBy: none
+		sourceColumn: PurchasingDoc
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesOrg
+		dataType: string
+		lineageTag: 4e2ae060-d0a4-4c3d-ac9d-20c52b769053
+		summarizeBy: none
+		sourceColumn: SalesOrg
+
+		annotation SummarizationSetBy = Automatic
+
+	column Batch
+		dataType: string
+		lineageTag: 102f9a04-8968-4a0d-87de-29c81472319c
+		summarizeBy: none
+		sourceColumn: Batch
+
+		annotation SummarizationSetBy = Automatic
+
+	column ItemCategory
+		dataType: string
+		lineageTag: 531053f0-f0db-4bb9-beed-9c8cc9f01242
+		summarizeBy: none
+		sourceColumn: ItemCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column Plant
+		dataType: string
+		lineageTag: eb359976-90e9-4588-9323-255588385959
+		summarizeBy: none
+		sourceColumn: Plant
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeliveryQty
+		dataType: double
+		lineageTag: 03889535-40a0-4337-9851-1e23a692f26b
+		summarizeBy: sum
+		sourceColumn: DeliveryQty
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SalesUnit
+		dataType: string
+		lineageTag: cacc3182-eeae-4aec-ab49-b734da4d6dcb
+		summarizeBy: none
+		sourceColumn: SalesUnit
+
+		annotation SummarizationSetBy = Automatic
+
+	column DelivDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 735f26db-4813-4e82-b32c-f0c7e4fd0ce2
+		summarizeBy: none
+		sourceColumn: DelivDate
+
+		variation Variación
+			isDefault
+			relationship: cfb44226-8057-4cbf-b6d8-46de562e1993
+			defaultHierarchy: LocalDateTable_a9e88699-70fb-4a9f-a632-d0b6e83b7f3d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ActGdsMvmntDate
+		dataType: string
+		lineageTag: f0544066-6fbe-4cb5-b350-34bb22d5216d
+		summarizeBy: none
+		sourceColumn: ActGdsMvmntDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column NetWeight
+		dataType: double
+		lineageTag: 50a292ed-106a-453e-a5f0-d124655c1b17
+		summarizeBy: sum
+		sourceColumn: NetWeight
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalWeight
+		dataType: double
+		lineageTag: cbd37017-e20f-45f4-a6d6-aff53a1d2461
+		summarizeBy: sum
+		sourceColumn: TotalWeight
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column WeightUnit
+		dataType: string
+		lineageTag: 3086f766-5420-4dd0-9886-81f8f0955ad3
+		summarizeBy: none
+		sourceColumn: WeightUnit
+
+		annotation SummarizationSetBy = Automatic
+
+	column Volume
+		dataType: double
+		lineageTag: 7d843294-fa88-484f-a73d-e3f5f7445369
+		summarizeBy: sum
+		sourceColumn: Volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column VolumeUnit
+		dataType: string
+		lineageTag: 9df457a9-3372-48a1-9df6-cce7cbba2e6e
+		summarizeBy: none
+		sourceColumn: VolumeUnit
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShippingPoint/ReceivingPt
+		dataType: string
+		lineageTag: 606dfed8-22eb-459d-8413-c94ac143a0db
+		summarizeBy: none
+		sourceColumn: ShippingPoint/ReceivingPt
+
+		annotation SummarizationSetBy = Automatic
+
+	column OverallWMStatus
+		dataType: string
+		lineageTag: dd494c09-4b1e-4fc2-baac-8854b2aa7215
+		summarizeBy: none
+		sourceColumn: OverallWMStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column Origen1
+		dataType: string
+		lineageTag: bc610b60-5ee4-4fa9-b3e0-b7f761cc1c92
+		summarizeBy: none
+		sourceColumn: Origen1
+
+		annotation SummarizationSetBy = Automatic
+
+	column StatusWH
+		dataType: string
+		lineageTag: 1484a38a-b076-4b7d-a924-de5cd428ea10
+		summarizeBy: none
+		sourceColumn: StatusWH
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: string
+		lineageTag: eba70373-e5d3-465d-b7b8-96d8f0fff7fd
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoMovimiento
+		dataType: string
+		lineageTag: 2fc78b00-5c3a-4570-aeda-d47c3497d4a1
+		summarizeBy: none
+		sourceColumn: TipoMovimiento
+
+		annotation SummarizationSetBy = Automatic
+
+	column Familia
+		dataType: string
+		lineageTag: 5f5c6bb5-95ad-46af-9289-10bb53796788
+		summarizeBy: none
+		sourceColumn: Familia
+
+		annotation SummarizationSetBy = Automatic
+
+	column UniXCJ
+		dataType: double
+		lineageTag: 2f8eb327-3e8d-4cdb-bac7-6b5e11ed7877
+		summarizeBy: sum
+		sourceColumn: UniXCJ
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UnixPAL
+		dataType: double
+		lineageTag: d9777e96-8f24-4ba7-ad5d-e9500c789c44
+		summarizeBy: sum
+		sourceColumn: UnixPAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Unidades
+		dataType: string
+		lineageTag: 391c563d-2008-4b25-9972-12a136bcf357
+		summarizeBy: none
+		sourceColumn: Unidades
+
+		annotation SummarizationSetBy = Automatic
+
+	column Item
+		dataType: string
+		lineageTag: 5eb19fe4-7893-4973-8251-fa70942d54e2
+		summarizeBy: none
+		sourceColumn: Item
+
+		annotation SummarizationSetBy = Automatic
+
+	column Route
+		dataType: string
+		lineageTag: 5416267c-d915-4026-8039-0dc3d369164f
+		summarizeBy: none
+		sourceColumn: Route
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActualDeliveryQty
+		dataType: double
+		lineageTag: 441ce240-361a-442c-9beb-ea01431e7e34
+		summarizeBy: sum
+		sourceColumn: ActualDeliveryQty
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DistributionChannel
+		dataType: string
+		lineageTag: ce02ac20-4d56-4247-aa0a-3e0307f5fccf
+		summarizeBy: none
+		sourceColumn: DistributionChannel
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalDeliveryID
+		dataType: string
+		lineageTag: 7ebdb9d6-14a9-4578-8a6a-7478f62e62d7
+		summarizeBy: none
+		sourceColumn: ExternalDeliveryID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: f73acc76-81f6-4c14-962d-7b22b89b3caf
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column DoorForWarehouseNo
+		dataType: string
+		lineageTag: 906a4ec1-5b71-46b7-b621-23de10d8f6ee
+		summarizeBy: none
+		sourceColumn: DoorForWarehouseNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column StagingArea
+		dataType: string
+		lineageTag: af924114-3dc8-4fb6-a506-fce94e407f39
+		summarizeBy: none
+		sourceColumn: StagingArea
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedOn
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 11488395-7551-4c1d-a952-6a1173a7bb32
+		summarizeBy: none
+		sourceColumn: CreatedOn
+
+		variation Variación
+			isDefault
+			relationship: 01085909-9f5f-47cf-b969-882982563756
+			defaultHierarchy: LocalDateTable_3d4bb109-8e3c-4bb8-a77f-81ba24b6e715.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column HigherLevelItemBatch
+		dataType: string
+		lineageTag: 0cd36737-227d-4a4d-a73b-663f361e6143
+		summarizeBy: none
+		sourceColumn: HigherLevelItemBatch
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReportDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 91b362c8-343a-4b5c-819e-859f0b03b0ea
+		summarizeBy: none
+		sourceColumn: ReportDate
+
+		variation Variación
+			isDefault
+			relationship: 7d96e109-ca21-4c2d-913b-e5263017cbfd
+			defaultHierarchy: LocalDateTable_b330e0c7-343a-4f77-a0b1-085282097ee7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Adicional1
+		dataType: string
+		lineageTag: 699db838-757f-48ed-8c3f-d6678c4bc266
+		summarizeBy: none
+		sourceColumn: Adicional1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional2
+		dataType: string
+		lineageTag: ddf4aaf6-6744-4d9d-8a55-3bd5f451f007
+		summarizeBy: none
+		sourceColumn: Adicional2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional3
+		dataType: string
+		lineageTag: 1357e391-1e0e-47e3-b9e3-9f5141b9cbc1
+		summarizeBy: none
+		sourceColumn: Adicional3
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional4
+		dataType: string
+		lineageTag: f261c178-84c8-4b06-8d42-9c5dd213aa6e
+		summarizeBy: none
+		sourceColumn: Adicional4
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional5
+		dataType: string
+		lineageTag: 2b6d3bac-478d-4316-90ae-024c37cd86a1
+		summarizeBy: none
+		sourceColumn: Adicional5
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_sourcefile
+		dataType: string
+		lineageTag: d0c9998b-801e-4b6d-b14e-3ba00af6e61e
+		summarizeBy: none
+		sourceColumn: desc_sourcefile
+
+		annotation SummarizationSetBy = Automatic
+
+	column FechaCarga
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 717972eb-c70d-4192-9e49-446aad62673a
+		summarizeBy: none
+		sourceColumn: FechaCarga
+
+		variation Variación
+			isDefault
+			relationship: 28b37b2c-ea00-46f7-ad77-288678db8c0d
+			defaultHierarchy: LocalDateTable_7f37b71d-57ed-4c92-bb87-314f874b23af.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Personalizado
+		dataType: string
+		lineageTag: 763fae9a-a34c-477c-987b-d3a01d84728d
+		summarizeBy: none
+		sourceColumn: Personalizado
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'REPORT VL06F' = m
+		mode: import
+		source =
+				let
+				    Origen = Databricks.Catalogs("adb-211113254468483.3.azuredatabricks.net", "/sql/1.0/warehouses/79c6cd12a5b4207a", [Catalog = "", Database = ""]),
+				    nams_mx_corporate_prod_Database = Origen{[Name="nams_mx_corporate_prod",Kind="Database"]}[Data],
+				    sc_dataset_Schema = nams_mx_corporate_prod_Database{[Name="sc_dataset",Kind="Schema"]}[Data],
+				    tb_mx_sc_fact_vl06f_nac_Table = sc_dataset_Schema{[Name="tb_mx_sc_fact_vl06f_nac",Kind="Table"]}[Data],
+				    #"Renombre Azure" = Table.RenameColumns(tb_mx_sc_fact_vl06f_nac_Table, {
+				    {"desc_delivery", "Delivery"},
+				    {"desc_shiptodsc", "ShipToDsc"},
+				    {"desc_shipto", "ShipTo"},
+				    {"desc_shiptolocation", "ShipToLocation"},
+				    {"desc_material", "Material"},
+				    {"desc_materialdsc", "MaterialDsc"},
+				    {"desc_purchasingdoc", "PurchasingDoc"},
+				    {"desc_salesorg", "SalesOrg"},
+				    {"desc_batch", "Batch"},
+				    {"desc_itemcategory", "ItemCategory"},
+				    {"desc_plant", "Plant"},
+				    {"val_deliveryqty", "DeliveryQty"},
+				    {"desc_salesunit", "SalesUnit"},
+				    {"date_delivdate", "DelivDate"},
+				    {"date_actgdsmvmntdate", "ActGdsMvmntDate"},
+				    {"val_netweight", "NetWeight"},
+				    {"val_totalweight", "TotalWeight"},
+				    {"desc_weightunit", "WeightUnit"},
+				    {"val_volume", "Volume"},
+				    {"desc_volumeunit", "VolumeUnit"},
+				    {"desc_shippingpoint_receivingpt", "ShippingPoint/ReceivingPt"},
+				    {"desc_overallwmstatus", "OverallWMStatus"},
+				    {"desc_origen1", "Origen1"},
+				    {"desc_statuswh", "StatusWH"},
+				    {"desc_id", "ID"},
+				    {"desc_tipomovimiento", "TipoMovimiento"},
+				    {"desc_familia", "Familia"},
+				    {"val_unixcj", "UniXCJ"},
+				    {"val_unixpal", "UnixPAL"},
+				    {"desc_unidades", "Unidades"},
+				    {"desc_item", "Item"},
+				    {"desc_route", "Route"},
+				    {"val_actualdeliveryqty", "ActualDeliveryQty"},
+				    {"desc_distributionchannel", "DistributionChannel"},
+				    {"desc_externaldeliveryid", "ExternalDeliveryID"},
+				    {"desc_createdby", "CreatedBy"},
+				    {"desc_doorforwarehouseno", "DoorForWarehouseNo"},
+				    {"desc_stagingarea", "StagingArea"},
+				    {"date_createdon", "CreatedOn"},
+				    {"desc_higherlevelitembatch", "HigherLevelItemBatch"},
+				    {"desc_adicional1", "Adicional1"},
+				    {"desc_adicional2", "Adicional2"},
+				    {"desc_adicional3", "Adicional3"},
+				    {"desc_adicional4", "Adicional4"},
+				    {"desc_adicional5", "Adicional5"}
+				}),
+				    #"Personalizada agregada" = Table.AddColumn(#"Renombre Azure", "Personalizado", each [Delivery]&[Item]&[HigherLevelItemBatch]),
+				    #"Duplicados Quitados" = Table.Distinct(#"Personalizada agregada", {"Personalizado"}),
+				    Personalizado1 = Table.RenameColumns(#"Duplicados Quitados",{{"tmstp_fechacarga", "FechaCarga"}, {"date_reportdate", "ReportDate"}})
+				in
+				    Personalizado1
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

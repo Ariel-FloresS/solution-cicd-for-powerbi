@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Visualizacion_Alice_Tetris (1)"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "541c76c8-2f93-4161-b124-81510fa6477e"
+  }
+}

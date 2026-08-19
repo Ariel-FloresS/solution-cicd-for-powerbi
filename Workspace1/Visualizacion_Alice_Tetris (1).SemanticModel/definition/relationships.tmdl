@@ -1,0 +1,52 @@
+relationship 278fb20a-20c2-4c44-bafc-a17e200a8425
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'DIM Plantas'.FechaCarga
+	toColumn: LocalDateTable_d087823a-e2cc-4c47-9807-fdda2a4742e8.Date
+
+relationship cfb44226-8057-4cbf-b6d8-46de562e1993
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'REPORT VL06F'.DelivDate
+	toColumn: LocalDateTable_a9e88699-70fb-4a9f-a632-d0b6e83b7f3d.Date
+
+relationship 01085909-9f5f-47cf-b969-882982563756
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'REPORT VL06F'.CreatedOn
+	toColumn: LocalDateTable_3d4bb109-8e3c-4bb8-a77f-81ba24b6e715.Date
+
+relationship 7d96e109-ca21-4c2d-913b-e5263017cbfd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'REPORT VL06F'.ReportDate
+	toColumn: LocalDateTable_b330e0c7-343a-4f77-a0b1-085282097ee7.Date
+
+relationship 28b37b2c-ea00-46f7-ad77-288678db8c0d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'REPORT VL06F'.FechaCarga
+	toColumn: LocalDateTable_7f37b71d-57ed-4c92-bb87-314f874b23af.Date
+
+relationship 045a5a54-aeca-1116-92b4-a768457888a0
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'REPORT AlmacenTC'.Shipto
+	toColumn: 'REPORT VL06F'.ShipTo
+
+relationship 8a59617a-f75a-7f5a-b797-0379990c5e6a
+	fromColumn: 'REPORT VL06F'.Plant
+	toColumn: 'DIM Plantas'.Planta
+
+relationship 14b36dfe-c506-43e6-a112-2af5355ef2e7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'REPORT ADI'.Fecha_actualizacion
+	toColumn: LocalDateTable_974423dd-7995-4de0-84b5-4292a863c0fe.Date
+
+relationship 968d7cc1-5fdd-fe5c-4f2a-99375748600c
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'REPORT ADI'.Carga_TM
+	toColumn: Base3D.'Carga TM'
+
+relationship 4beb068f-fc48-4892-545c-8a620ca29e7d
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Base3D.'Carga TM'
+	toColumn: 'REPORT AlmacenTC'.CargaTM
+
