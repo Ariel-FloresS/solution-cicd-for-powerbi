@@ -55,25 +55,21 @@ def _diff(base_ref: str, repo_root: Path, diff_filter: str) -> list[str]:
     assert_ref_exists(base_ref, repo_root)
  
     output: str = run(
-        ["diff", "--name-only", f"--diff-filter={diff_filter}", f"{base_ref}...HEAD"],
+
+        [   "diff",
+            "--name-only",
+            "-z",
+            f"--diff-filter={diff_filter}",
+            f"{base_ref}...HEAD"
+        ],
         repo_root,
     )
-    return [line for line in output.splitlines() if line.strip()]
+    return [path for path in output.split("\0") if path.strip()]
 
 
 def changed_files(base_ref: str, repo_root: Path) -> list[str]:
-    """Return paths modified relative to `base_ref`.
- 
-    `--diff-filter=d` drops deletions: a file that no longer exists
-    cannot be validated.
-    """
-    assert_ref_exists(base_ref, repo_root)
- 
-    output: str = run(
-        ["diff", "--name-only", "--diff-filter=d", f"{base_ref}...HEAD"],
-        repo_root,
-    )
-    return [line for line in output.splitlines() if line.strip()]
+    """Return paths modified relative to `base_ref`"""
+    return  _diff(base_ref = base_ref, repo_root = repo_root, diff_filter = "d")
 
 def deleted_files(base_ref: str, repo_root: Path) -> list[str]:
     """Return paths removed relative to `base_ref`"""

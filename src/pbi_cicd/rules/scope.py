@@ -133,7 +133,7 @@ def _assert_single_workspace(workspaces: set[str]) -> None:
     if len(workspaces) > 1:
         listed: str = ", ".join(sorted(workspaces))
         raise RuleViolation(
-            "1. One workspace per pull request",
+            "1",
             f"A pull request may only touch one workspace. Found "
             f"{len(workspaces)}: {listed}. Split this into separate "
             "pull requests.",

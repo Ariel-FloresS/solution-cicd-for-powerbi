@@ -17,7 +17,7 @@ class RuleViolation(PbiCicdError):
 
     def __init__(self, rule: str, message: str) -> None:
         self.rule = rule
-        super().__init__(f"[Rule: {rule}] {message}")
+        super().__init__(f"[RuleViolation: {rule}] {message}")
 
 
 class PipelineError(PbiCicdError):
@@ -27,3 +27,5 @@ class PipelineError(PbiCicdError):
     Raise this when the problem is the environment or configuration,
     not the PR content. The reader is whoever maintains the pipeline.
     """
+    def __init__(self, message:str)-> None:
+        super().__init__(f"[PipelineError: {message}]")
