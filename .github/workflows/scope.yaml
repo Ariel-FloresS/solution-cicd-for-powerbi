@@ -35,7 +35,7 @@ on:
 
 jobs:
   scope:
-    name: Detect changed items
+    
     runs-on: ubuntu-latest
 
     outputs:
