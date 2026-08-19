@@ -31,13 +31,18 @@ jobs:
     echo-scope:
         runs-on: ubuntu-latest
         needs: scope
+        env:
+            WORKSPACE: ${{needs.scope.outputs.workspace}}
+            HAS_CHANGES: ${{needs.scope.outputs.has_changes}}
+            SEMANTIC_MODELS: ${{needs.scope.outputs.semantic_models}}
+            REPORTS: ${{needs.scope.outputs.reports}}
         steps:
             - name: Printing GITHUB_OUTPUT
               run: |
-                echo "workspace = ${{needs.scope.outputs.workspace}}"
-                echo "has_changes = ${{needs.scope.outputs.has_changes}}"
-                echo "semantic_models = ${{needs.scope.outputs.semantic_models}}"
-                echo "reports = ${{needs.scope.outputs.reports}}"
+                echo "workspace = $WORKSPACE "
+                echo "has_changes = $HAS_CHANGES "
+                echo "semantic_models = $SEMANTIC_MODELS "
+                echo "reports = $REPORTS "
 
 
 
