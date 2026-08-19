@@ -1,0 +1,29 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-ES
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["REPORT ADI","DIM Plantas","REPORT AlmacenTC","REPORT VL06F"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'REPORT ADI'
+ref table DateTableTemplate_8d87a385-f546-4f64-a925-b4609c4b5b2a
+ref table 'DIM Plantas'
+ref table LocalDateTable_d087823a-e2cc-4c47-9807-fdda2a4742e8
+ref table 'REPORT AlmacenTC'
+ref table 'REPORT VL06F'
+ref table LocalDateTable_a9e88699-70fb-4a9f-a632-d0b6e83b7f3d
+ref table LocalDateTable_3d4bb109-8e3c-4bb8-a77f-81ba24b6e715
+ref table LocalDateTable_b330e0c7-343a-4f77-a0b1-085282097ee7
+ref table LocalDateTable_7f37b71d-57ed-4c92-bb87-314f874b23af
+ref table Base3D
+ref table LocalDateTable_974423dd-7995-4de0-84b5-4292a863c0fe
+
+ref cultureInfo en-US
+

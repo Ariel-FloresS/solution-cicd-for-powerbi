@@ -1,0 +1,95 @@
+table Base3D
+	lineageTag: a3493a7a-db07-4307-81c0-f6ece12b6bbd
+
+	column Columna
+		lineageTag: a5f59f6d-a257-45b5-bf5d-5d9b9dc649da
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Columna]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grupo
+		lineageTag: 439efc0f-2256-4484-b336-0d09ec2e6e96
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Grupo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column CordY
+		formatString: 0
+		lineageTag: 47323e01-601e-47c5-9d50-332e8c578d5e
+		summarizeBy: sum
+		sourceColumn: [Fila]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Carga TM'
+		lineageTag: ac0b80ed-d94b-4281-9b2e-73439ea0a081
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Carga TM]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Material
+		lineageTag: 6e9c40fa-5226-401f-a7bd-cb5735c47260
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Material]
+
+		annotation SummarizationSetBy = Automatic
+
+	column CordZ
+		formatString: 0
+		lineageTag: 521c2526-3196-425a-800f-69f964b44930
+		summarizeBy: sum
+		sourceColumn: [Capa]
+
+		annotation SummarizationSetBy = Automatic
+
+	column CordX =
+			
+			SWITCH(
+			    'Base3D'[Columna],
+			    "Derecha", 1,
+			    "Izquierda", 2
+			)
+		formatString: 0
+		lineageTag: 5d37ffd8-84b7-4d67-8788-f52ad70203a3
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column CordGrup =
+			
+			SWITCH(
+			    'Base3D'[CordZ],
+			    1, 1,
+			    2, 2,
+			    3, 3,
+			    4, 4
+			)
+		formatString: 0
+		lineageTag: 86a7f975-5bfb-4b05-a582-281777a76526
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Base3D = calculated
+		mode: import
+		source =
+				
+				SELECTCOLUMNS(
+				    'REPORT ADI',
+				    "Capa", 'REPORT ADI'[Capa],
+				    "Carga TM", 'REPORT ADI'[Carga_TM],
+				    "Material",'REPORT ADI'[Material],
+				    "Columna", 'REPORT ADI'[Columna],
+				    "Grupo", 'REPORT ADI'[Grupo],
+				    "Fila", 'REPORT ADI'[Fila]
+				)
+
+	annotation PBI_Id = c648097fff8f4611ac1bbde926dc1be5
+

@@ -1,0 +1,565 @@
+table 'REPORT AlmacenTC'
+	lineageTag: 0e51bf43-7f7f-4fbd-b51a-362dc285a1b5
+
+	column Shipto
+		dataType: string
+		lineageTag: e8739684-5a91-4106-a33a-2c091e168263
+		summarizeBy: none
+		sourceColumn: Shipto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tractor
+		dataType: string
+		lineageTag: fddc8394-04be-4a47-bd16-ba13c7362d43
+		summarizeBy: none
+		sourceColumn: Tractor
+
+		annotation SummarizationSetBy = Automatic
+
+	column IngresoTractor
+		dataType: string
+		lineageTag: fcee33d1-2a8a-40e4-8120-16b0bf364f10
+		summarizeBy: none
+		sourceColumn: IngresoTractor
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumCajas
+		dataType: string
+		lineageTag: 7f1c6470-2540-4aca-bfef-d9bf4c9b1a66
+		summarizeBy: none
+		sourceColumn: NumCajas
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nota
+		dataType: string
+		lineageTag: de476f57-cd91-48ff-874b-23afcd096c1c
+		summarizeBy: none
+		sourceColumn: Nota
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 6198237c-b322-4007-b826-59bf1b68b6a1
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Colocación cita'
+		dataType: string
+		lineageTag: 13a4c6c6-127c-47f7-af23-a8c4a9027708
+		summarizeBy: none
+		sourceColumn: Colocación cita
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiaSalida
+		dataType: string
+		lineageTag: 7a474d29-dbf7-4cb8-a5c5-cc53f3a18e98
+		summarizeBy: none
+		sourceColumn: DiaSalida
+
+		annotation SummarizationSetBy = Automatic
+
+	column FinPreparacion
+		dataType: string
+		lineageTag: cb0b515c-5aaf-4027-a6eb-1be8c51861c0
+		summarizeBy: none
+		sourceColumn: FinPreparacion
+
+		annotation SummarizationSetBy = Automatic
+
+	column InicioPreparacion
+		dataType: string
+		lineageTag: c1881d1b-56e2-4fc6-ac0a-6b7c7708eca4
+		summarizeBy: none
+		sourceColumn: InicioPreparacion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rampa
+		dataType: string
+		lineageTag: 4b07552a-0b58-4b5d-bdbb-8140e8bf2b8d
+		summarizeBy: none
+		sourceColumn: Rampa
+
+		annotation SummarizationSetBy = Automatic
+
+	column LayoutCS
+		dataType: string
+		lineageTag: dfd7d0ae-ad4f-4b0d-be1e-7b74488b01df
+		summarizeBy: none
+		sourceColumn: LayoutCS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Aduana
+		dataType: string
+		lineageTag: bc30a7e2-768a-4480-a8ab-b55819a3a7bd
+		summarizeBy: none
+		sourceColumn: Aduana
+
+		annotation SummarizationSetBy = Automatic
+
+	column CajasPicking
+		dataType: string
+		lineageTag: 09712657-a72f-4314-b5b0-cb74471f6cb6
+		summarizeBy: none
+		sourceColumn: CajasPicking
+
+		annotation SummarizationSetBy = Automatic
+
+	column PalletsRack
+		dataType: string
+		lineageTag: 3bf138c4-5c16-4f38-aaab-3d85bbfd5144
+		summarizeBy: none
+		sourceColumn: PalletsRack
+
+		annotation SummarizationSetBy = Automatic
+
+	column PalletsBlock
+		dataType: string
+		lineageTag: 664b1541-1571-4eda-b32c-e9c235f98130
+		summarizeBy: none
+		sourceColumn: PalletsBlock
+
+		annotation SummarizationSetBy = Automatic
+
+	column TarimasChep
+		dataType: string
+		lineageTag: 2393eb81-24a0-4516-a364-39e6d7c19b2f
+		summarizeBy: none
+		sourceColumn: TarimasChep
+
+		annotation SummarizationSetBy = Automatic
+
+	column TarimasBlancasPrice
+		dataType: string
+		lineageTag: c22ca01e-9e2e-436d-aa38-a139e9b27e53
+		summarizeBy: none
+		sourceColumn: TarimasBlancasPrice
+
+		annotation SummarizationSetBy = Automatic
+
+	column GrupoAlmacen
+		dataType: string
+		lineageTag: 5bcbd7bd-0a35-4f0d-9be7-5eb20a36a18c
+		summarizeBy: none
+		sourceColumn: GrupoAlmacen
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrioridadComite
+		dataType: string
+		lineageTag: cef0dc8b-42fd-49dd-97b5-b3fe3f90acb3
+		summarizeBy: none
+		sourceColumn: PrioridadComite
+
+		annotation SummarizationSetBy = Automatic
+
+	column FechaFacturacion
+		dataType: string
+		lineageTag: 775d4266-dd30-4df8-9ac4-e86ace9b8647
+		summarizeBy: none
+		sourceColumn: FechaFacturacion
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConvenioChep
+		dataType: string
+		lineageTag: 7810b19a-aab0-4908-8360-2398a1a900ae
+		summarizeBy: none
+		sourceColumn: ConvenioChep
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrigenPrincipal
+		dataType: string
+		lineageTag: c7c66872-c034-4b16-9ca0-4a4ba1142892
+		summarizeBy: none
+		sourceColumn: OrigenPrincipal
+
+		annotation SummarizationSetBy = Automatic
+
+	column NotaFactura
+		dataType: string
+		lineageTag: 3fb40a3f-27d1-46ba-a580-5eda0a35f980
+		summarizeBy: none
+		sourceColumn: NotaFactura
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cliente
+		dataType: string
+		lineageTag: 984358c0-9eb9-43ff-b213-a291454c538a
+		summarizeBy: none
+		sourceColumn: Cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column Destino
+		dataType: string
+		lineageTag: 6ed76fdf-07cf-4c39-9122-8df3f2d6afc3
+		summarizeBy: none
+		sourceColumn: Destino
+
+		annotation SummarizationSetBy = Automatic
+
+	column Remolque
+		dataType: string
+		lineageTag: c40b28c2-dfe9-4686-8f47-b3e5df7f71c4
+		summarizeBy: none
+		sourceColumn: Remolque
+
+		annotation SummarizationSetBy = Automatic
+
+	column CargaTM
+		dataType: string
+		lineageTag: a3b3eddb-3e18-4f57-bd40-738ecb6bef68
+		summarizeBy: none
+		sourceColumn: CargaTM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Proveedor
+		dataType: string
+		lineageTag: 61ed770a-2f5b-4197-9aad-eaaa71f89057
+		summarizeBy: none
+		sourceColumn: Proveedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column DetalleGC
+		dataType: string
+		lineageTag: 7e54f318-5ba7-4dae-b7e3-acea18cc4716
+		summarizeBy: none
+		sourceColumn: DetalleGC
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumCamion
+		dataType: string
+		lineageTag: 4714a41e-83b5-41eb-b333-86a4e4c57317
+		summarizeBy: none
+		sourceColumn: NumCamion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Operacion
+		dataType: string
+		lineageTag: 31816317-943a-456d-83ee-f99d79ed32d5
+		summarizeBy: none
+		sourceColumn: Operacion
+
+		annotation SummarizationSetBy = Automatic
+
+	column GrupoComercial
+		dataType: string
+		lineageTag: a2e57f1a-7d88-4da1-823f-70503ca0de04
+		summarizeBy: none
+		sourceColumn: GrupoComercial
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_refresh_pht
+		dataType: string
+		lineageTag: 2c155de3-996c-4df4-b2dd-75b3f600a8b5
+		summarizeBy: none
+		sourceColumn: last_refresh_pht
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sts
+		dataType: string
+		lineageTag: f8369129-e351-4b93-b182-50614a776233
+		summarizeBy: none
+		sourceColumn: Sts
+
+		annotation SummarizationSetBy = Automatic
+
+	column CitaDespacho
+		dataType: string
+		lineageTag: ffda8f5c-6ff4-4786-bbf4-32550d80ef08
+		summarizeBy: none
+		sourceColumn: CitaDespacho
+
+		annotation SummarizationSetBy = Automatic
+
+	column CitaCarga
+		dataType: string
+		lineageTag: 53c0d872-ad13-40de-b059-d762477793c0
+		summarizeBy: none
+		sourceColumn: CitaCarga
+
+		annotation SummarizationSetBy = Automatic
+
+	column Facturacion
+		dataType: string
+		lineageTag: 8363d55c-47a8-4151-924d-6bc6ca43ed99
+		summarizeBy: none
+		sourceColumn: Facturacion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Despacho
+		dataType: string
+		lineageTag: 1cb428bc-69dd-4226-80ca-784474901a9c
+		summarizeBy: none
+		sourceColumn: Despacho
+
+		annotation SummarizationSetBy = Automatic
+
+	column FinCarga
+		dataType: string
+		lineageTag: 0763090d-cc6f-4405-af1a-63db0fd3cf13
+		summarizeBy: none
+		sourceColumn: FinCarga
+
+		annotation SummarizationSetBy = Automatic
+
+	column MCTractor
+		dataType: string
+		lineageTag: 041863a0-a4d0-435d-a813-057fa0689bd4
+		summarizeBy: none
+		sourceColumn: MCTractor
+
+		annotation SummarizationSetBy = Automatic
+
+	column MCRemolque
+		dataType: string
+		lineageTag: 370986a3-d57c-4192-b534-eb21e6fb56ee
+		summarizeBy: none
+		sourceColumn: MCRemolque
+
+		annotation SummarizationSetBy = Automatic
+
+	column IngresoRemolque
+		dataType: string
+		lineageTag: ea648825-52d3-46c3-b3d9-4d3e215ca03e
+		summarizeBy: none
+		sourceColumn: IngresoRemolque
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'REPORT AlmacenTC' = m
+		mode: import
+		source = ```
+				let
+				    // 1. Conexión al catálogo de Databricks
+				    Origen = Databricks.Catalogs(
+				        "adb-211113254468483.3.azuredatabricks.net", 
+				        "/sql/1.0/warehouses/79c6cd12a5b4207a", 
+				        [Catalog = "", Database = ""]
+				    ),
+				
+				    // 2. Navegación por la base de datos
+				    nams_mx_corporate_prod_Database = Origen{[Name="nams_mx_corporate_prod", Kind="Database"]}[Data],
+				    sc_dataset_Schema = nams_mx_corporate_prod_Database{[Name="sc_dataset", Kind="Schema"]}[Data],
+				    tb_mx_sc_outbound_live_Table = sc_dataset_Schema{[Name="tb_mx_sc_outbound_live", Kind="Table"]}[Data],
+				
+				    // 3. Renombrar columnas para mayor legibilidad
+				    ColumnasRenombradas = Table.RenameColumns(tb_mx_sc_outbound_live_Table, {
+				        {"desc_truck_eco", "Tractor"},
+				        {"desc_unity", "Unidad"},
+				        {"desc_type_unity", "Tipo de unidad"},
+				        {"desc_source_notes", "Nota"},
+				        {"desc_status", "Status"},
+				        {"tmstp_source_src_plan_CREATED_date", "Colocación cita"},
+				        {"desc_source_src_plan_CREATED_user", "Usuario"},
+				        {"tmstp_source_src_plan_DISPATCH_date", "CitaDespacho"},
+				        {"desc_supply_chain", "NumCamion"},
+				        {"desc_grupo_comercial", "GrupoComercial"},
+				        {"desc_type_operation", "Operacion"},
+				        {"desc_carga_tm", "CargaTM"},
+				        {"desc_shipto", "Shipto"},
+				        {"desc_client", "Cliente"},
+				        {"desc_destiny", "Destino"},
+				        {"desc_warehouse_note", "GrupoAlmacen"},
+				        {"desc_layout", "LayoutCS"},
+				        {"desc_company_name", "Proveedor"},
+				        {"desc_trailer_eco", "Remolque"},
+				        {"desc_ramp", "Rampa"},
+				        {"desc_customs", "Aduana"},
+				        {"desc_box_picking", "CajasPicking"},
+				        {"desc_pallets_rack", "PalletsRack"},
+				        {"desc_pallets_block", "PalletsBlock"},
+				        {"desc_platform_chep", "TarimasChep"},
+				        {"desc_platform_white", "TarimasBlancasPrice"},
+				        {"desc_convenio_chep", "ConvenioChep"},
+				        {"desc_main_location", "OrigenPrincipal"},
+				        {"tmstp_source_src_track_PREPARATION_START_date", "InicioPreparacion"},
+				        {"tmstp_source_src_track_PREPARATION_END_date", "FinPreparacion"},
+				        {"tmstp_ARRIVE_SOURCE_TRUCK", "IngresoTractor"},
+				        {"tmstp_ARRIVE_SOURCE_TRAILER", "IngresoRemolque"},
+				        {"tmstp_source_src_track_DESK_TRUCK_date", "MCTractor"},
+				        {"tmstp_source_src_track_DESK_TRAILER_date", "MCRemolque"},
+				        {"tmstp_source_src_plan_LOAD_START_date", "CitaCarga"},
+				        {"tmstp_source_src_track_LOAD_END_date", "FinCarga"},
+				        {"tmstp_source_src_track_INVOICE_date", "Facturacion"},
+				        {"desc_date_invoice", "FechaFacturacion"},
+				        {"tmstp_source_src_track_DISPATCH_date", "Despacho"},
+				        {"tmstp_source_src_track_EXIT_date", "DiaSalida"},
+				        {"desc_valuation_note", "NotaFactura"},
+				        {"desc_box", "NumCajas"},
+				        {"desc_is_committee_priority", "PrioridadComite"},
+				        {"desc_deliveries", "DetalleGC"},
+				        {"tmstp_tmstmp_carga", "last_refresh_pht"}
+				    }),
+				    // 5. Seleccionar columnas necesarias
+				    ColumnasSeleccionadas = Table.SelectColumns(ColumnasRenombradas, {
+				        "Tractor", "IngresoTractor", "NumCajas", "Nota", "Status", 
+				        "Colocación cita", "CitaDespacho", "CitaCarga", "DiaSalida", "Facturacion", 
+				        "Despacho", "FinCarga", "MCTractor", "MCRemolque", "FinPreparacion", "InicioPreparacion", 
+				        "Rampa", "LayoutCS", "Aduana", "CajasPicking", "PalletsRack", "PalletsBlock", "TarimasChep", 
+				        "TarimasBlancasPrice", "GrupoAlmacen", "PrioridadComite", "FechaFacturacion", "ConvenioChep", "OrigenPrincipal", "NotaFactura", "Cliente", "Shipto", "Destino", 
+				        "Remolque", "IngresoRemolque", "CargaTM", "Proveedor", "DetalleGC", 
+				        "NumCamion", "Operacion", "GrupoComercial", "last_refresh_pht"
+				    }),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(ColumnasSeleccionadas,
+				{
+				        {"Tractor", type text},
+				        {"Nota", type text},
+				        {"Status", type text},
+				        {"Colocación cita", type text},
+				        {"CitaDespacho", type text},
+				        {"NumCamion", type text},
+				        {"GrupoComercial", type text},
+				        {"Operacion", type text},
+				        {"CargaTM", type text},
+				        {"Shipto", type text},
+				        {"Cliente", type text},
+				        {"Destino", type text},
+				        {"GrupoAlmacen", type text},
+				        {"LayoutCS", type text},
+				        {"Proveedor", type text},
+				        {"Remolque", type text},
+				        {"Rampa", type text},
+				        {"Aduana", type text},
+				        {"CajasPicking", type text},
+				        {"PalletsRack", type text},
+				        {"PalletsBlock", type text},
+				        {"TarimasChep", type text},
+				        {"TarimasBlancasPrice", type text},
+				        {"ConvenioChep", type text},
+				        {"OrigenPrincipal", type text},
+				        {"InicioPreparacion", type text},
+				        {"FinPreparacion", type text},
+				        {"IngresoTractor", type text},
+				        {"IngresoRemolque", type text},
+				        {"MCTractor", type text},
+				        {"MCRemolque", type text},
+				        {"CitaCarga", type text},
+				        {"FinCarga", type text},
+				        {"Facturacion", type text},
+				        {"FechaFacturacion", type text},
+				        {"Despacho", type text},
+				        {"DiaSalida", type text},
+				        {"NotaFactura", type text},
+				        {"NumCajas", type text},
+				        {"PrioridadComite", type text},
+				        {"DetalleGC", type text},
+				        {"last_refresh_pht", type text}
+				    }),
+				
+				    // 4. Eliminar duplicados
+				    QuitarDuplicados = Table.Distinct(#"Tipo cambiado", {"GrupoComercial"}),
+				
+				    // 7. Agregar columna "Sts" con clasificación
+				    ColumnaPersonalizada = Table.AddColumn(QuitarDuplicados, "Sts", each 
+				        if [Status] = "Preparando" then "2 Preparando" 
+				        else if [Status] = "Pendiente de Carga" then "3 Preparado en piso"
+				        else if [Status] = "NUEVO" then "1 Nuevo"
+				        else if [Status] = "Cargando" then "4 Cargando"
+				        else if [Status] = "Despachado sin Transito" then "6 Despachado sin Transito"
+				        else if [Status] = "Facturado sin Despachar" or [Status] = "Cargado sin Facturar" then "5 Cargado"
+				        else ""
+				    ),
+				
+				    // 8. Reemplazo de valores nulos
+				    ReemplazosNulos = Table.ReplaceValue(ColumnaPersonalizada, null, "", Replacer.ReplaceValue, {"Tractor", "Nota", "Rampa", "LayoutCS", "Proveedor", "Aduana", "FechaFacturacion", "NotaFactura", "Remolque"}),
+				    ReemplazoNumCajas = Table.ReplaceValue(ReemplazosNulos, null, "0", Replacer.ReplaceValue, {"NumCajas", "CajasPicking", "PalletsRack", "PalletsBlock", "TarimasChep", "TarimasBlancasPrice"}),
+				
+				    #"Valor reemplazado" = Table.ReplaceValue(ReemplazoNumCajas, null, "", Replacer.ReplaceValue, {"IngresoTractor"}),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Valor reemplazado",{{"NumCajas", type text}, {"CajasPicking", type text}, {"PalletsRack", type text}, {"PalletsBlock", type text}, {"TarimasChep", type text}, {"TarimasBlancasPrice", type text}, {"Sts", type text}, {"Colocación cita", type datetime}}),
+				
+				    // Agregar columnas auxiliares
+				    #"Personalizada agregada" = Table.AddColumn(#"Tipo cambiado1", "CitaDespacho Aux", each DateTime.ToText(DateTime.FromText([CitaDespacho]), "yyyy-MM-dd HH:mm:ss")),
+				    #"Personalizada agregada1" = Table.AddColumn(#"Personalizada agregada", "CitaCarga Aux", each DateTime.ToText(DateTime.FromText([CitaCarga]), "yyyy-MM-dd HH:mm:ss")),
+				    #"Personalizada agregada2" = Table.AddColumn(#"Personalizada agregada1", "Facturacion Aux", each DateTime.ToText(DateTime.FromText([Facturacion]), "yyyy-MM-dd HH:mm:ss")),
+				    #"Personalizada agregada3" = Table.AddColumn(#"Personalizada agregada2", "Despacho Aux", each DateTime.ToText(DateTime.FromText([Despacho]), "yyyy-MM-dd HH:mm:ss")),
+				    #"Personalizada agregada4" = Table.AddColumn(#"Personalizada agregada3", "FinCarga Aux", each DateTime.ToText(DateTime.FromText([FinCarga]), "yyyy-MM-dd HH:mm:ss")),
+				    #"Personalizada agregada5" = Table.AddColumn(#"Personalizada agregada4", "MCTractor Aux", each DateTime.ToText(DateTime.FromText([MCTractor]), "yyyy-MM-dd HH:mm:ss")),
+				    #"Personalizada agregada6" = Table.AddColumn(#"Personalizada agregada5", "MCRemolque Aux", each DateTime.ToText(DateTime.FromText([MCRemolque]), "yyyy-MM-dd HH:mm:ss")),
+				    #"Personalizada agregada7" = Table.AddColumn(#"Personalizada agregada6", "IngresoRemolque Aux", each DateTime.ToText(DateTime.FromText([IngresoRemolque]), "yyyy-MM-dd HH:mm:ss")),
+				
+				    // Eliminar columnas originales
+				    ColumnasEliminadas = Table.RemoveColumns(#"Personalizada agregada7", {"CitaDespacho", "CitaCarga", "Facturacion", "Despacho", "FinCarga", "MCTractor", "MCRemolque", "IngresoRemolque"}),
+				
+				    // Renombrar columnas auxiliares
+				    ColumnasRenombradasAux = Table.RenameColumns(ColumnasEliminadas, {
+				        {"CitaDespacho Aux", "CitaDespacho"},
+				        {"CitaCarga Aux", "CitaCarga"},
+				        {"Facturacion Aux", "Facturacion"},
+				        {"Despacho Aux", "Despacho"},
+				        {"FinCarga Aux", "FinCarga"},
+				        {"MCTractor Aux", "MCTractor"},
+				        {"MCRemolque Aux", "MCRemolque"},
+				        {"IngresoRemolque Aux", "IngresoRemolque"}
+				    }),
+				    #"Tipo cambiado2" = Table.TransformColumnTypes(ColumnasRenombradasAux,{
+				        {"Tractor", type text},
+				        {"Nota", type text},
+				        {"Status", type text},
+				        {"Colocación cita", type text},
+				        {"CitaDespacho", type text},
+				        {"NumCamion", type text},
+				        {"GrupoComercial", type text},
+				        {"Operacion", type text},
+				        {"CargaTM", type text},
+				        {"Shipto", type text},
+				        {"Cliente", type text},
+				        {"Destino", type text},
+				        {"GrupoAlmacen", type text},
+				        {"LayoutCS", type text},
+				        {"Proveedor", type text},
+				        {"Remolque", type text},
+				        {"Rampa", type text},
+				        {"Aduana", type text},
+				        {"CajasPicking", type text},
+				        {"PalletsRack", type text},
+				        {"PalletsBlock", type text},
+				        {"TarimasChep", type text},
+				        {"TarimasBlancasPrice", type text},
+				        {"ConvenioChep", type text},
+				        {"OrigenPrincipal", type text},
+				        {"InicioPreparacion", type text},
+				        {"FinPreparacion", type text},
+				        {"IngresoTractor", type text},
+				        {"IngresoRemolque", type text},
+				        {"MCTractor", type text},
+				        {"MCRemolque", type text},
+				        {"CitaCarga", type text},
+				        {"FinCarga", type text},
+				        {"Facturacion", type text},
+				        {"FechaFacturacion", type text},
+				        {"Despacho", type text},
+				        {"DiaSalida", type text},
+				        {"NotaFactura", type text},
+				        {"NumCajas", type text},
+				        {"PrioridadComite", type text},
+				        {"DetalleGC", type text},
+				        {"last_refresh_pht", type text}
+				    }),
+				    #"Filas filtradas" = Table.SelectRows(#"Tipo cambiado2", each [CargaTM] <> null and [CargaTM] <> "")
+				in
+				    #"Filas filtradas"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

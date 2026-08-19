@@ -1,0 +1,271 @@
+table 'DIM Plantas'
+	lineageTag: e3ead746-84da-401f-9700-b7b49b547794
+
+	column Planta
+		dataType: string
+		lineageTag: 55d6cf01-c4e8-4ee2-8718-b62c2bd498e6
+		summarizeBy: none
+		sourceColumn: Planta
+
+		annotation SummarizationSetBy = Automatic
+
+	column PlantaDsc
+		dataType: string
+		lineageTag: 24754837-7526-49e1-be19-94cdf08b1df9
+		summarizeBy: none
+		sourceColumn: PlantaDsc
+
+		annotation SummarizationSetBy = Automatic
+
+	column PuestoExpedicion
+		dataType: string
+		lineageTag: 2d8cd83e-4ddf-4281-9437-a0482f4e3eb8
+		summarizeBy: none
+		sourceColumn: PuestoExpedicion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Origen1
+		dataType: string
+		lineageTag: 0f2f2768-e958-4aaa-a1ea-f16bcf8235ff
+		summarizeBy: none
+		sourceColumn: Origen1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional1
+		dataType: string
+		lineageTag: 33fd6892-c573-4abc-b13a-a64812fb77c9
+		summarizeBy: none
+		sourceColumn: Adicional1
+
+		annotation SummarizationSetBy = Automatic
+
+	column WH
+		dataType: string
+		lineageTag: 800e17ef-6d3f-4173-8e0a-8880a7c48511
+		summarizeBy: none
+		sourceColumn: WH
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cap Carga'
+		dataType: string
+		lineageTag: e65f5325-87de-4403-b13c-4937f7b0b548
+		summarizeBy: none
+		sourceColumn: Cap Carga
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cj Picking'
+		dataType: string
+		lineageTag: 6dd05737-669d-4c6f-a140-3ca766e9af7c
+		summarizeBy: none
+		sourceColumn: Cj Picking
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Full pallet'
+		dataType: string
+		lineageTag: b83a763c-3c55-4c04-a63b-f0c4081107dc
+		summarizeBy: none
+		sourceColumn: Full pallet
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional6
+		dataType: string
+		lineageTag: 7c90d99e-82bc-47f3-906a-d42831e02819
+		summarizeBy: none
+		sourceColumn: Adicional6
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional7
+		dataType: string
+		lineageTag: ff04ab8c-cef5-4024-be00-17a9ec57e267
+		summarizeBy: none
+		sourceColumn: Adicional7
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Obj peso cont'
+		dataType: string
+		lineageTag: 57c6d5e5-711e-42b1-bed3-36cb01ecbf9c
+		summarizeBy: none
+		sourceColumn: Obj peso cont
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Peso en piso'
+		dataType: string
+		lineageTag: 281e5733-e431-41dc-99ef-989bb51a1a7c
+		summarizeBy: none
+		sourceColumn: Peso en piso
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional10
+		dataType: string
+		lineageTag: d43bf3fc-8ac3-4951-92eb-a90600cec1f4
+		summarizeBy: none
+		sourceColumn: Adicional10
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional11
+		dataType: string
+		lineageTag: 0a64ae76-18b1-410b-b84f-8a3e8d96e979
+		summarizeBy: none
+		sourceColumn: Adicional11
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional12
+		dataType: string
+		lineageTag: 1d81f838-ff57-4905-8548-cc4ad834c3e7
+		summarizeBy: none
+		sourceColumn: Adicional12
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional13
+		dataType: string
+		lineageTag: 3e5caef5-3ebb-4936-ae2c-290579f0db63
+		summarizeBy: none
+		sourceColumn: Adicional13
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional14
+		dataType: string
+		lineageTag: 52def5c4-643d-40cb-9c32-ac7886cc4160
+		summarizeBy: none
+		sourceColumn: Adicional14
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional15
+		dataType: string
+		lineageTag: ff60d5b1-0fe7-40dc-909b-da855cb17e83
+		summarizeBy: none
+		sourceColumn: Adicional15
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional16
+		dataType: string
+		lineageTag: e1de03bb-ca22-4f88-9cf7-0f2d7be25a45
+		summarizeBy: none
+		sourceColumn: Adicional16
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional17
+		dataType: string
+		lineageTag: 10178bd5-c897-4db4-80bf-2c8b8e7bb0e1
+		summarizeBy: none
+		sourceColumn: Adicional17
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional18
+		dataType: string
+		lineageTag: 4fb57ed6-413d-4947-9959-2ff6143ce81b
+		summarizeBy: none
+		sourceColumn: Adicional18
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional19
+		dataType: string
+		lineageTag: 65a1491a-1a16-4d1b-b69f-c8a315554e81
+		summarizeBy: none
+		sourceColumn: Adicional19
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional20
+		dataType: string
+		lineageTag: 23581122-f92a-432e-bfc0-69c317677bd4
+		summarizeBy: none
+		sourceColumn: Adicional20
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional21
+		dataType: string
+		lineageTag: 4b498f18-e985-4694-89e3-f529a74a1904
+		summarizeBy: none
+		sourceColumn: Adicional21
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional22
+		dataType: string
+		lineageTag: c825c391-d358-4387-a2df-d6d89a6221aa
+		summarizeBy: none
+		sourceColumn: Adicional22
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional23
+		dataType: string
+		lineageTag: 11c69dd4-f748-46d1-b70b-06167e6c0073
+		summarizeBy: none
+		sourceColumn: Adicional23
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional24
+		dataType: string
+		lineageTag: e1143d8d-ab86-4f2b-89b3-0ccd9c648bad
+		summarizeBy: none
+		sourceColumn: Adicional24
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adicional25
+		dataType: string
+		lineageTag: 3f03ef24-86f2-49ea-bf34-5e5998559533
+		summarizeBy: none
+		sourceColumn: Adicional25
+
+		annotation SummarizationSetBy = Automatic
+
+	column FechaCarga
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5f389c85-bccf-435d-af59-e90c9ae35a36
+		summarizeBy: none
+		sourceColumn: FechaCarga
+
+		variation Variación
+			isDefault
+			relationship: 278fb20a-20c2-4c44-bafc-a17e200a8425
+			defaultHierarchy: LocalDateTable_d087823a-e2cc-4c47-9807-fdda2a4742e8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'DIM Plantas' = m
+		mode: import
+		source =
+				let
+				    Origen = Databricks.Catalogs("adb-211113254468483.3.azuredatabricks.net", "/sql/1.0/warehouses/79c6cd12a5b4207a", [Catalog = "", Database = ""]),
+				    nams_mx_corporate_prod_Database = Origen{[Name="nams_mx_corporate_prod",Kind="Database"]}[Data],
+				    sc_gold_Schema = nams_mx_corporate_prod_Database{[Name="sc_gold",Kind="Schema"]}[Data],
+				    tb_mx_sc_dim_plantas_full_Table = sc_gold_Schema{[Name="tb_mx_sc_dim_plantas_full",Kind="Table"]}[Data],
+				    #"Renombre Azure" = Table.RenameColumns(tb_mx_sc_dim_plantas_full_Table,{{"desc_Planta", "Planta"}, {"desc_PlantaDsc", "PlantaDsc"}, {"desc_Adicional2", "WH"}, {"desc_Adicional3", "Cap Carga"}, {"desc_PuestoExpedicion", "PuestoExpedicion"}, {"desc_Origen1", "Origen1"}, {"desc_Adicional1", "Adicional1"}, {"desc_Adicional4", "Adicional4"}, {"desc_Adicional5", "Adicional5"}, {"desc_Adicional6", "Adicional6"}, {"desc_Adicional7", "Adicional7"}, {"desc_Adicional8", "Adicional8"}, {"desc_Adicional9", "Adicional9"}, {"desc_Adicional10", "Adicional10"}, {"desc_Adicional11", "Adicional11"}, {"desc_Adicional12", "Adicional12"}, {"desc_Adicional13", "Adicional13"}, {"desc_Adicional14", "Adicional14"}, {"desc_Adicional15", "Adicional15"}, {"desc_Adicional16", "Adicional16"}, {"desc_Adicional17", "Adicional17"}, {"desc_Adicional18", "Adicional18"}, {"desc_Adicional19", "Adicional19"}, {"desc_Adicional20", "Adicional20"}, {"desc_Adicional21", "Adicional21"}, {"desc_Adicional22", "Adicional22"}, {"desc_Adicional23", "Adicional23"}, {"desc_Adicional24", "Adicional24"}, {"desc_Adicional25", "Adicional25"}, {"tmstp_FechaCarga", "FechaCarga"}}),
+				    #"Reemplazo Null" = Table.ReplaceValue(#"Renombre Azure", null, "", Replacer.ReplaceValue, {
+				    "Adicional15", "Adicional16", "Adicional17", "Adicional18", "Adicional19",
+				    "Adicional20", "Adicional21", "Adicional22", "Adicional23", "Adicional24", "Adicional25"
+				}),
+				    #"Duplicados quitados" = Table.Distinct(#"Reemplazo Null", {"Adicional1"}),
+				    #"Columnas con nombre cambiado1" = Table.RenameColumns(#"Duplicados quitados",{{"Adicional8", "Obj peso cont"}, {"Adicional4", "Cj Picking"}, {"Adicional5", "Full pallet"}, {"Adicional9", "Peso en piso"}})
+				in
+				    #"Columnas con nombre cambiado1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
