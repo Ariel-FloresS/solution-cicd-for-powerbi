@@ -55,4 +55,6 @@ jobs:
         
       - name: Detect changed Power BI items
         id: detect
-        run: uv run python -m pbi_cicd.rules.scope --base ${{ inputs.base_ref }}
+        env:
+          BASE_REF: ${{ inputs.base_ref }}
+        run: uv run python -m pbi_cicd.rules.scope --base "$BASE_REF"

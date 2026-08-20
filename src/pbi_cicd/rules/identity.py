@@ -104,7 +104,11 @@ def _assert_no_collisions(collisions: list[list[Item]], names: dict[Item, str]) 
     if not collisions:
         return
  
-    listed: str = ", ".join(repr(names[members[0]]) for members in collisions)
+    
+    listed: str = ", ".join(
+        f"{members[0].type} {names[members[0]]!r}" for members in collisions
+    )
+    
     raise RuleViolation(
         RULE,
         f"{len(collisions)} display name(s) are used by more than one item of "

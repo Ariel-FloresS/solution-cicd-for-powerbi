@@ -51,9 +51,7 @@ jobs:
       
       - name: "Rule 4: item folder names must use safe characters"
         run: |
-          uv run python -m pbi_cicd.rules.naming \
-            --models "$SEMANTIC_MODELS" \
-            --reports "$REPORTS"
+          uv run python -m pbi_cicd.rules.name --models "$SEMANTIC_MODELS"  --reports "$REPORTS"
 
       - name: "Rule 5: display names must be unique within a workspace"
         if: always()
