@@ -67,7 +67,7 @@ def _assert_no_violations(violations: list[tuple[Item, str]], total: int) -> Non
     names: str = ", ".join(repr(item.name) for item, _ in violations)
 
     raise RuleViolation(
-        "11",
+        RULE,
         f"{len(violations)} of {total} item names use forbidden characters: "
         f"{names}. Allowed: ASCII letters, digits, underscore and hyphen.",
     )
