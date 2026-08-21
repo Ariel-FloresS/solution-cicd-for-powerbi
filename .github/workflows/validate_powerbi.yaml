@@ -45,7 +45,7 @@ jobs:
       - uses: ./.github/actions/uv_sync
 
      
-      # last. Every step carries if: always() so one failure does not
+      # last. Every step carries  if : always() so one failure does not
       # hide the rest — the author fixes everything in one push instead
       # of discovering problems one at a time.
       
