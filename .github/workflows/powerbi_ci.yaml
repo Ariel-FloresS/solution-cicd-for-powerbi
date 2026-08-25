@@ -1,73 +1,83 @@
 name: "Continous Integration For PowerBI"
-
+ 
 on:
-
+ 
     pull_request:
-
+ 
         branches:
-
+ 
             - main
             - sandbox
-
+ 
         paths-ignore:
             - 'src/**'
             - '.github/**'
             - 'pyproject.toml'
             - 'README.md'
-
-
+ 
+ 
 permissions:
   contents: read
-
+ 
 jobs:
-
+ 
     scope:
-
+ 
         uses: ./.github/workflows/scope.yaml
         with:
             base_ref: origin/${{ github.base_ref }}
        
     validate_artefacts:
-
+ 
         needs: scope
-
+ 
         if: needs.scope.outputs.has_changes == 'true'
-
+ 
         uses: ./.github/workflows/validate_powerbi.yaml
         with:
             workspace: ${{ needs.scope.outputs.workspace }}
             semantic_models: ${{ needs.scope.outputs.semantic_models }}
             reports: ${{ needs.scope.outputs.reports }}
-
-    gate:
-        needs: [scope, validate_artefacts]
-        if: always()
-        runs-on: ubuntu-latest
+ 
+    bpa-rules:
+ 
+        needs:
+            - scope
+            - validate_artefacts
+ 
+        runs-on: windows-latest    
+ 
+        if: needs.scope.outputs.has_changes == 'true'
+ 
+        env:
+            RULES: src/tabula/BPARules_by_name.json
+ 
+           
+        strategy:
+            fail-fast: false
+            matrix:
+                semantic_model: ${{ fromJson(needs.scope.outputs.semantic_models) }}
+       
  
         steps:
-            - name: Check upstream results
-              env:
-                SCOPE_RESULT: ${{ needs.scope.result }}
-                VALIDATE_RESULT: ${{ needs.validate_artefacts.result }}
-                
+            - name: Checkout repository
+              uses:  actions/checkout@v7
+              with:
+                fetch-depth: 1
+ 
+            - name: Download Tabula Editor 2
               run: |
-                echo "scope    = $SCOPE_RESULT"
-                echo "validate = $VALIDATE_RESULT"
-        
-                for result in "$SCOPE_RESULT" "$VALIDATE_RESULT"; do
-                    if [ "$result" = "failure" ] || [ "$result" = "cancelled" ]; then
-                    echo "::error::A required job did not pass."
-                    exit 1
-                    fi
-                done
-        
-                echo "All required jobs passed."
-
-
-
-    
-
-
-
-
-
+                Invoke-WebRequest `
+                    "https://github.com/TabularEditor/TabularEditor/releases/latest/download/TabularEditor.Portable.zip" `
+                    -OutFile te2.zip
+                Expand-Archive te2.zip -DestinationPath te2
+                Get-ChildItem te2  
+ 
+            - name:  Run Best Practice Analyzer
+ 
+              env:
+                MODEL: ${{ matrix.semantic_model }}
+               
+              run: |
+              
+                .\te2\TabularEditor.exe "$env:MODEL\definition\model.tmdl" -A "$env:RULES" -G
