@@ -78,6 +78,5 @@ jobs:
               env:
                 MODEL: ${{ matrix.semantic_model }}
                
-              run: |
-              
-                .\te2\TabularEditor.exe "$env:MODEL\definition\model.tmdl" -A "$env:RULES" -G
+              shell: cmd
+              run: start "" /B /WAIT te2\TabularEditor.exe "%MODEL%\definition\model.tmdl" -A "%RULES%" -G
