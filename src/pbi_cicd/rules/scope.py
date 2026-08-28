@@ -17,11 +17,8 @@ from pathlib import Path, PurePosixPath
 from pbi_cicd.infrastructure.output import annotate_error, write_outputs, print_summary, annotate_warning
 from pbi_cicd.infrastructure.git import changed_files,deleted_files
 from pbi_cicd.infrastructure.errors import PipelineError, RuleViolation, PbiCicdError
-from pbi_cicd.models import ITEM_SUFFIXES, ChangeSet, Item
+from pbi_cicd.models import ITEM_SUFFIXES, ChangeSet, Item, PLATFORM_FILE
 
-
-# Identity file Power BI Desktop writes inside every item folder.
-PLATFORM_FILE: str = ".platform"
  
 # Top-level folders that are not business domains.
 NON_WORKSPACE_DIRS: frozenset[str] = frozenset({"src", ".github", ".git"})
@@ -29,6 +26,8 @@ NON_WORKSPACE_DIRS: frozenset[str] = frozenset({"src", ".github", ".git"})
 # Depth 2 means a file sitting directly under a workspace folder,
 # such as ventas/.gitignore. Those are legitimate and carry no item.
 WORKSPACE_FILE_DEPTH: int = 2
+
+RULE: str = "1"
 
 
 def resolve(paths: Iterable[str]) -> ChangeSet:
@@ -133,7 +132,7 @@ def _assert_single_workspace(workspaces: set[str]) -> None:
     if len(workspaces) > 1:
         listed: str = ", ".join(sorted(workspaces))
         raise RuleViolation(
-            "1. One workspace per pull request",
+            RULE,
             f"A pull request may only touch one workspace. Found "
             f"{len(workspaces)}: {listed}. Split this into separate "
             "pull requests.",

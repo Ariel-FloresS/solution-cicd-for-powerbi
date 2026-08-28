@@ -1,50 +1,82 @@
 name: "Continous Integration For PowerBI"
-
+ 
 on:
-
+ 
     pull_request:
-
+ 
         branches:
-
+ 
             - main
             - sandbox
-
+ 
         paths-ignore:
             - 'src/**'
             - '.github/**'
             - 'pyproject.toml'
             - 'README.md'
-
-
+ 
+ 
 permissions:
   contents: read
-
+ 
 jobs:
-
+ 
     scope:
-
+ 
         uses: ./.github/workflows/scope.yaml
         with:
             base_ref: origin/${{ github.base_ref }}
        
-
-    echo-scope:
-        runs-on: ubuntu-latest
+    validate_artefacts:
+ 
         needs: scope
+ 
+        if: needs.scope.outputs.has_changes == 'true'
+ 
+        uses: ./.github/workflows/validate_powerbi.yaml
+        with:
+            workspace: ${{ needs.scope.outputs.workspace }}
+            semantic_models: ${{ needs.scope.outputs.semantic_models }}
+            reports: ${{ needs.scope.outputs.reports }}
+ 
+    bpa-rules:
+ 
+        needs:
+            - scope
+            - validate_artefacts
+ 
+        runs-on: windows-latest    
+ 
+        if: needs.scope.outputs.has_changes == 'true'
+ 
         env:
-            WORKSPACE: ${{needs.scope.outputs.workspace}}
-            HAS_CHANGES: ${{needs.scope.outputs.has_changes}}
-            SEMANTIC_MODELS: ${{needs.scope.outputs.semantic_models}}
-            REPORTS: ${{needs.scope.outputs.reports}}
+            RULES: src/tabula/BPARules_by_name.json
+ 
+           
+        strategy:
+            fail-fast: false
+            matrix:
+                semantic_model: ${{ fromJson(needs.scope.outputs.semantic_models) }}
+       
+ 
         steps:
-            - name: Printing GITHUB_OUTPUT
+            - name: Checkout repository
+              uses:  actions/checkout@v7
+              with:
+                fetch-depth: 1
+ 
+            - name: Download Tabula Editor 2
               run: |
-                echo "workspace = $WORKSPACE "
-                echo "has_changes = $HAS_CHANGES "
-                echo "semantic_models = $SEMANTIC_MODELS "
-                echo "reports = $REPORTS "
-
-
-
-
-
+                Invoke-WebRequest `
+                    "https://github.com/TabularEditor/TabularEditor/releases/latest/download/TabularEditor.Portable.zip" `
+                    -OutFile te2.zip
+                Expand-Archive te2.zip -DestinationPath te2
+                Get-ChildItem te2  
+ 
+            - name:  Run Best Practice Analyzer
+ 
+              env:
+                MODEL: ${{ matrix.semantic_model }}
+               
+              shell: cmd
+              run: start "" /B /WAIT te2\TabularEditor.exe "%MODEL%\definition\model.tmdl" -A "%RULES%" -G

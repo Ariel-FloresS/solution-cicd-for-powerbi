@@ -7,6 +7,10 @@ from pbi_cicd.infrastructure.errors import PipelineError
 # Folder suffixes that mark a Fabric item, per the PBIP layout:https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-overview
 ITEM_SUFFIXES: tuple[str, str] = (".Report", ".SemanticModel")
 
+
+# Identity file Power BI Desktop writes inside every item folder.
+PLATFORM_FILE: str = ".platform"
+
 @dataclass(frozen=True)
 class Item:
     """A Fabric item located in the repository.

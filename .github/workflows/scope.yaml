@@ -1,4 +1,5 @@
 name: Scope
+run-name: Detect changed items
 
 
 
@@ -34,7 +35,7 @@ on:
 
 jobs:
   scope:
-    name: Detect changed items
+    
     runs-on: ubuntu-latest
 
     outputs:
@@ -54,4 +55,6 @@ jobs:
         
       - name: Detect changed Power BI items
         id: detect
-        run: uv run python -m pbi_cicd.rules.scope --base ${{ inputs.base_ref }}
+        env:
+          BASE_REF: ${{ inputs.base_ref }}
+        run: uv run python -m pbi_cicd.rules.scope --base "$BASE_REF"
