@@ -138,8 +138,7 @@ solution-cicd-for-powerbi/
 │   │       ├── scope.py              one workspace per PR, resolve changed items
 │   │       ├── name.py               safe characters in item folder names
 │   │       ├── identity.py           unique display names per workspace
-│   │       ├── sources.py            no local paths in data sources
-│   │       └── bpa.py                Best Practice Analyzer
+│   │       └── sources.py            no local paths in data sources
 │   │
 │   └── tabula/
 │       └── BPARules_by_name.json     Best Practice Analyzer rules
