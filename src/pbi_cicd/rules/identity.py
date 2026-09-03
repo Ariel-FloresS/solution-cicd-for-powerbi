@@ -4,6 +4,9 @@ The name shown in Fabric comes from `displayName` inside `.platform`,
 not from the folder. Two items of the same type carrying the same
 display name collide when the workspace syncs, and Fabric refuses the
 update with `PotentialDuplicateDisplayNameAndType`.
+
+
+
  
 """
 
