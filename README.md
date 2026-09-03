@@ -123,9 +123,10 @@ solution-cicd-for-powerbi/
 │   │   └── uv_sync/
 │   │       └── action.yaml           composite action, Python environment
 │   └── workflows/
-│       ├── powerbi_ci.yaml           orchestrator, triggered by pull request
+│       ├── powerbi_ci.yaml           orchestrator, triggered by dashboard changes
 │       ├── scope.yaml                reusable, resolves what changed
-│       └── validate_powerbi.yaml     reusable, artefact checks
+│       ├── validate_powerbi.yaml     reusable, artefact checks
+│       └── python_ci.yaml            unit tests, triggered by src/pbi_cicd changes
 │
 ├── src/
 │   ├── pbi_cicd/                     validation package
@@ -139,6 +140,12 @@ solution-cicd-for-powerbi/
 │   │       ├── name.py               safe characters in item folder names
 │   │       ├── identity.py           unique display names per workspace
 │   │       └── sources.py            no local paths in data sources
+│   │
+│   ├── tests/                        unit tests, one file per rule module
+│   │   ├── test_scope.py
+│   │   ├── test_name.py
+│   │   ├── test_identity.py
+│   │   └── test_sources.py
 │   │
 │   └── tabula/
 │       └── BPARules_by_name.json     Best Practice Analyzer rules
