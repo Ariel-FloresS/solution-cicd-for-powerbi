@@ -159,6 +159,7 @@ solution-cicd-for-powerbi/
 │
 ├── pyproject.toml
 ├── uv.lock
+├── .gitignore
 └── README.md
 ```
 
