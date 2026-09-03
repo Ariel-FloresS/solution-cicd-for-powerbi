@@ -1,0 +1,33 @@
+name: "Unit Test for src/pbi_cicd"
+
+on:
+     pull_request:
+ 
+        branches:
+ 
+            - main
+            - sandbox
+ 
+        paths:
+            - 'src/pbi_cicd/**'
+            - 'src/tests/**'
+            - 'pyproject.toml'
+
+permissions:
+  contents: read
+
+jobs:
+    unit-test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v7
+              
+            
+            - name: install and sync uv
+              uses: ./.github/actions/uv_sync
+
+            - name: Run pytest
+              run: uv run pytest -vv
+
+           
