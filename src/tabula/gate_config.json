@@ -1,0 +1,126 @@
+{
+  "version": "1.0",
+  "description": "Gate de calidad PBI Sentinel. Generado desde rules_catalog.json; no editar a mano los puntos.",
+  "scoring": {
+    "countMode": "perRule"
+  },
+  "scoreGroups": [
+    {
+      "name": "Performance",
+      "categories": [
+        "Performance"
+      ],
+      "approvedPct": 0.9,
+      "conditionalPct": 0.8
+    }
+  ],
+  "requiredLevel": {
+    "dev": "CONDICIONAL",
+    "prod": "APROBADO"
+  },
+  "failOnRuleError": true,
+  "rules": {
+    "MANY-TO-MANY_RELATIONSHIPS_SHOULD_BE_SINGLE-DIRECTION": {
+      "category": "Performance",
+      "points": 8,
+      "blocker": true
+    },
+    "MODEL_USING_DIRECT_QUERY_AND_NO_AGGREGATIONS": {
+      "category": "Performance",
+      "points": 6,
+      "blocker": true
+    },
+    "REMOVE_REDUNDANT_COLUMNS_IN_RELATED_TABLES": {
+      "category": "Performance",
+      "points": 4,
+      "blocker": false
+    },
+    "AVOID_EXCESSIVE_BI-DIRECTIONAL_OR_MANY-TO-MANY_RELATIONSHIPS": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": false
+    },
+    "AVOID_EXPANDING_TABLE_COLUMNS_ON_SHAREPOINT_TABLES": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": false
+    },
+    "AVOID_FLOATING_POINT_DATA_TYPES": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": false
+    },
+    "AVOID_STRUCTURED_DATA_SOURCES_WITH_PROVIDER_PARTITIONS": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": false
+    },
+    "AVOID_USELESS_POWER_QUERY_STEPS": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": false
+    },
+    "AVOID_VOLATILE_FUNCTIONS_IN_CALCULATED": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": false
+    },
+    "FILTER_COLUMNS_NOT_TABLES": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": false
+    },
+    "LIMIT_ROW_LEVEL_SECURITY_(RLS)_LOGIC": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": false
+    },
+    "MEASURES_USING_TIME_INTELLIGENCE_AND_MODEL_IS_USING_DIRECT_QUERY": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": false
+    },
+    "MODEL_SHOULD_HAVE_A_DATE_TABLE": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": false
+    },
+    "REMOVE_AUTO-DATE_TABLE": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": true
+    },
+    "SNOWFLAKE_SCHEMA_ARCHITECTURE": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": false
+    },
+    "USE_SHAREPOINT_CONTENTS_INSTEAD_OF_FILES": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": false
+    },
+    "WEB_CONTENTS_WITHOUT_RELATIVE_PATH_OR_QUERY": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": false
+    },
+    "WEB_CONTENTS_WITHOUT_RELATIVE_PATH_OR_QUERY_EXPRESSION": {
+      "category": "Performance",
+      "points": 2,
+      "blocker": false
+    },
+    "AVOID_USING_MANY-TO-MANY_RELATIONSHIPS_ON_TABLES_USED_FOR_DYNAMIC_ROW_LEVEL_SECURITY": {
+      "category": "Performance",
+      "points": 0,
+      "blocker": true
+    }
+  },
+  "excluded": [
+    "AVOID_BI-DIRECTIONAL_RELATIONSHIPS_AGAINST_HIGH-CARDINALITY_COLUMNS",
+    "FIX_REFERENTIAL_INTEGRITY_VIOLATIONS",
+    "LARGE_TABLES_SHOULD_BE_PARTITIONED",
+    "REDUCE_USAGE_OF_LONG-LENGTH_COLUMNS_WITH_HIGH_CARDINALITY",
+    "SPLIT_DATE_AND_TIME"
+  ]
+}
