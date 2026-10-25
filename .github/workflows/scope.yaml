@@ -57,4 +57,16 @@ jobs:
         id: detect
         env:
           BASE_REF: ${{ inputs.base_ref }}
-        run: uv run python -m pbi_cicd.rules.scope --base "$BASE_REF"
+        run: |
+          set -o pipefail
+          uv run python -m pbi_cicd.rules.scope --base "$BASE_REF" 2>&1 | tee "$RUNNER_TEMP/report-scope.txt"
+
+      # Picked up by the gate job for the consolidated report.
+      - name: Upload report section
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-scope
+          path: ${{ runner.temp }}/report-scope.txt
+          retention-days: 1
+          if-no-files-found: ignore

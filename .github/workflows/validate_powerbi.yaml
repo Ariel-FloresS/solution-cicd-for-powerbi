@@ -49,14 +49,31 @@ jobs:
       # hide the rest — the author fixes everything in one push instead
       # of discovering problems one at a time.
       
+      # Without pipefail the step would take tee's exit code, which is
+      # always 0, and a broken rule would pass.
       - name: "Rule 4: item folder names must use safe characters"
         run: |
-          uv run python -m pbi_cicd.rules.name --models "$SEMANTIC_MODELS"  --reports "$REPORTS"
+          set -o pipefail
+          uv run python -m pbi_cicd.rules.name --models "$SEMANTIC_MODELS" --reports "$REPORTS" 2>&1 | tee -a "$RUNNER_TEMP/report-validate.txt"
 
       - name: "Rule 5: display names must be unique within a workspace"
         if: always()
-        run: uv run python -m pbi_cicd.rules.identity --workspace "$WORKSPACE"
+        run: |
+          set -o pipefail
+          uv run python -m pbi_cicd.rules.identity --workspace "$WORKSPACE" 2>&1 | tee -a "$RUNNER_TEMP/report-validate.txt"
 
       - name: "Rule 6: semantic models must not read from local paths"
         if: always()
-        run: uv run python -m pbi_cicd.rules.sources --models "$SEMANTIC_MODELS"
+        run: |
+          set -o pipefail
+          uv run python -m pbi_cicd.rules.sources --models "$SEMANTIC_MODELS" 2>&1 | tee -a "$RUNNER_TEMP/report-validate.txt"
+
+      # Picked up by the gate job for the consolidated report.
+      - name: Upload report section
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-validate
+          path: ${{ runner.temp }}/report-validate.txt
+          retention-days: 1
+          if-no-files-found: ignore

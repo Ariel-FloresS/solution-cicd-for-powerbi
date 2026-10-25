@@ -43,43 +43,37 @@ jobs:
             reports: ${{ needs.scope.outputs.reports }}
  
     bpa-rules:
- 
+
         needs:
             - scope
             - validate_artefacts
- 
-        runs-on: windows-latest    
- 
-        if: needs.scope.outputs.has_changes == 'true'
- 
-        env:
-            RULES: src/tabula/BPARules_by_name.json
- 
-           
-        strategy:
-            fail-fast: false
-            matrix:
-                semantic_model: ${{ fromJson(needs.scope.outputs.semantic_models) }}
-       
- 
-        steps:
-            - name: Checkout repository
-              uses:  actions/checkout@v7
-              with:
-                fetch-depth: 1
- 
-            - name: Download Tabula Editor 2
-              run: |
-                Invoke-WebRequest `
-                    "https://github.com/TabularEditor/TabularEditor/releases/latest/download/TabularEditor.Portable.zip" `
-                    -OutFile te2.zip
-                Expand-Archive te2.zip -DestinationPath te2
-                Get-ChildItem te2  
- 
-            - name:  Run Best Practice Analyzer
- 
-              env:
-                MODEL: ${{ matrix.semantic_model }}
-               
-              shell: cmd
-              run: start "" /B /WAIT te2\TabularEditor.exe "%MODEL%\definition\model.tmdl" -A "%RULES%" -G
+
+        # A pull request touching only reports leaves semantic_models at '[]',
+        # and a matrix built from an empty list fails instead of skipping.
+        if: needs.scope.outputs.has_changes == 'true' && needs.scope.outputs.semantic_models != '[]'
+
+        uses: ./.github/workflows/bpa_powerbi.yaml
+        with:
+            semantic_models: ${{ needs.scope.outputs.semantic_models }}
+            environment: prod
+
+    # Runs whatever happened above: a failure upstream is exactly when the
+    # report is needed. The permissions are the ceiling the gate's own
+    # jobs narrow down from.
+    gate:
+
+        needs:
+            - scope
+            - validate_artefacts
+            - bpa-rules
+
+        if: always()
+
+        permissions:
+            contents: write
+            pull-requests: write
+            actions: write
+
+        uses: ./.github/workflows/gate_powerbi.yaml
+        with:
+            needs: ${{ toJSON(needs) }}

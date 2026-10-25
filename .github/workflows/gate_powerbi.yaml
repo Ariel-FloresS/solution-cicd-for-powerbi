@@ -1,0 +1,98 @@
+name: Pull Request Gate
+run-name: Pull Request Gate
+
+on:
+  workflow_call:
+
+    inputs:
+
+      needs:
+        description: toJSON(needs) from the calling workflow, so the gate sees every job's result.
+        type: string
+        required: true
+
+jobs:
+
+  # The required status check for branch protection. Merging happens in a
+  # separate job: while this one runs its check is still in progress, and
+  # branch protection would refuse a merge it requested itself.
+  evaluate:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      actions: write
+
+    env:
+      REPORT: pipeline-report-pr-${{ github.event.pull_request.number }}
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - uses: ./.github/actions/uv_sync
+
+      # Each artifact lands in a folder named after it. The BPA sections all
+      # carry the same file name, so merging them into one folder would
+      # keep only the last.
+      - name: Download report sections
+        uses: actions/download-artifact@v4
+        with:
+          pattern: report-*
+          path: ${{ runner.temp }}/sections
+
+      - name: Decide
+        env:
+          NEEDS: ${{ inputs.needs }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          uv run python -m pbi_cicd.gate \
+            --needs "$NEEDS" \
+            --sections "$RUNNER_TEMP/sections" \
+            --pr "$PR" \
+            --run-id "$GITHUB_RUN_ID" \
+            --output "$RUNNER_TEMP/$REPORT.txt"
+
+      - name: Upload consolidated report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.REPORT }}
+          path: ${{ runner.temp }}/${{ env.REPORT }}.txt
+          retention-days: 2
+          if-no-files-found: ignore
+
+      # Best effort: a cleanup failure must not block a merge. The sections
+      # expire after a day regardless.
+      - name: Delete report sections
+        if: always()
+        continue-on-error: true
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts" --paginate \
+            --jq '.artifacts[] | select(.name | startswith("report-")) | .id' |
+          while read -r id; do
+            gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$id"
+          done
+
+  merge:
+    needs: evaluate
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+
+      - name: Squash merge the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: gh pr merge "$PR" --squash --delete-branch

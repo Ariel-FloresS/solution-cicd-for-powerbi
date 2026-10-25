@@ -1,0 +1,73 @@
+name: Best Practice Analyzer Gate
+run-name: Best Practice Analyzer Gate
+
+on:
+  workflow_call:
+
+    inputs:
+
+      semantic_models:
+        description: JSON array of changed .SemanticModel paths.
+        type: string
+        required: true
+
+      environment:
+        description: Key into requiredLevel of gate_config.json.
+        type: string
+        required: false
+        default: prod
+
+jobs:
+  bpa:
+    runs-on: windows-latest
+
+    env:
+      TE_VERSION: '2.29.0'
+      TE_SHA256: 'C0D3A7ABDA4572BAAF3AEEDF9CB342CE7AD4D9840E6438D6B13DF02267D308A4'
+      GATE_ENVIRONMENT: ${{ inputs.environment }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        semantic_model: ${{ fromJson(inputs.semantic_models) }}
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - uses: ./.github/actions/uv_sync
+
+      - name: Install Tabular Editor 2
+        shell: pwsh
+        run: |
+          $zip = "$env:RUNNER_TEMP\te.zip"
+          Invoke-WebRequest "https://cdn.tabulareditor.com/files/TabularEditor.$env:TE_VERSION.zip" -OutFile $zip
+          $hash = (Get-FileHash $zip -Algorithm SHA256).Hash
+          if ($hash -ne $env:TE_SHA256) { throw "Tabular Editor SHA256 mismatch: $hash" }
+          Expand-Archive $zip -DestinationPath "$env:RUNNER_TEMP\te"
+
+      - name: "Rule 7: Best Practice Analyzer gate"
+        shell: pwsh
+        env:
+          MODEL: ${{ matrix.semantic_model }}
+        run: |
+          uv run python -m pbi_cicd.rules.bpa `
+            --model "$env:MODEL" `
+            --environment "$env:GATE_ENVIRONMENT" `
+            --tabular-editor "$env:RUNNER_TEMP\te\TabularEditor.exe" `
+            --analyzer-output "$env:RUNNER_TEMP\bpa-output.txt" `
+            --report "$env:RUNNER_TEMP\report-bpa.txt"
+
+      # Picked up by the gate job for the consolidated report. The matrix
+      # value carries a slash, which artifact names reject.
+      - name: Upload report section
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-bpa-${{ strategy.job-index }}
+          path: ${{ runner.temp }}/report-bpa.txt
+          retention-days: 1
+          if-no-files-found: ignore
