@@ -10,7 +10,15 @@ from pbi_cicd.models import ChangeSet, Item
 from typing import TextIO
 import json
 import os
+import re
 import sys
+
+
+# A workflow command as the runner reads it: ::error file=path::message
+COMMAND_RE: re.Pattern[str] = re.compile(
+    r"^::(?P<level>error|warning|notice)(?P<properties>[^:]*)::(?P<message>.*)$"
+)
+FILE_RE: re.Pattern[str] = re.compile(r"file=([^,]+)")
 
 
 def write_outputs(changes: ChangeSet) -> None:
@@ -79,3 +87,33 @@ def print_summary(changes: ChangeSet) -> None:
 
     for item in changes.items:
         print(f"  {item.type:<14} {item.name}")
+
+
+def plain_text(text: str) -> str:
+    """Turn captured workflow commands back into readable lines.
+
+    The report sections are copies of what each step printed, so their
+    findings still carry the syntax and escaping meant for the runner.
+    """
+    lines: list[str] = []
+
+    line: str
+    for line in text.splitlines():
+        match: re.Match[str] | None = COMMAND_RE.match(line)
+        if match is None:
+            lines.append(line)
+            continue
+
+        message: str = _unescape(match["message"]).replace("\n", "\n" + " " * 9)
+        lines.append(f"{match['level'].upper():<9}{message}")
+
+        location: re.Match[str] | None = FILE_RE.search(match["properties"])
+        if location:
+            lines.append(f"{'':<9}file: {location[1]}")
+
+    return "\n".join(lines)
+
+
+def _unescape(message: str) -> str:
+    """Undo `_escape`. `%25` goes last, since it was escaped first."""
+    return message.replace("%0D", "\r").replace("%0A", "\n").replace("%25", "%")

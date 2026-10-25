@@ -84,4 +84,27 @@ class ChangeSet:
     @property
     def reports(self) -> list[Item]:
         return [i for i in self.items if i.is_report]
- 
+
+@dataclass(frozen=True)
+class GroupScore:
+    """The outcome of one score group."""
+
+    name: str
+    score: int
+    maximum: int
+    approved_min: int
+    conditional_min: int
+    level: str
+
+@dataclass(frozen=True)
+class Evaluation:
+    """The gate's verdict and everything that produced it."""
+
+    level: str
+    groups: list[GroupScore]
+    blockers: list[str]
+    deducted: list[str]
+    informational: list[str]
+    excluded: list[str]
+    rule_errors: dict[str, str]
+    failing_errors: list[str]
