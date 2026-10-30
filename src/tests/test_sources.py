@@ -52,4 +52,3 @@ def test_every_pattern_fires() -> None:
         findings: list[tuple[str, str]] = find_local_paths(line)
         assert findings, f"{expected_label} matched nothing"
         assert findings[0][0] == expected_label
-
