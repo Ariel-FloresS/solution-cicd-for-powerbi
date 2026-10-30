@@ -54,7 +54,7 @@ jobs:
         env:
           MODEL: ${{ matrix.semantic_model }}
         run: |
-          uv run python -m pbi_cicd.rules.bpa `
+          uv run python -m pbi_cicd.bpa `
             --model "$env:MODEL" `
             --environment "$env:GATE_ENVIRONMENT" `
             --tabular-editor "$env:RUNNER_TEMP\te\TabularEditor.exe" `
