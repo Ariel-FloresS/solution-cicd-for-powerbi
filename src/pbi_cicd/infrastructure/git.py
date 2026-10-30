@@ -74,4 +74,3 @@ def changed_files(base_ref: str, repo_root: Path) -> list[str]:
 def deleted_files(base_ref: str, repo_root: Path) -> list[str]:
     """Return paths removed relative to `base_ref`"""
     return _diff(base_ref, repo_root, diff_filter="D")
-
