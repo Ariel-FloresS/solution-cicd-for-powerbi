@@ -96,3 +96,25 @@ jobs:
           GH_REPO: ${{ github.repository }}
           PR: ${{ github.event.pull_request.number }}
         run: gh pr merge "$PR" --squash --delete-branch
+  
+  close:
+    needs: evaluate
+    if: failure()
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Close the pull request and delete its branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+
+        run: |
+          gh pr close "$PR" --delete-branch --comment \
+          "Close by the Pipeline: at least one check failed. The Artefact of the report $PR has been saved in the artefact section."
+
+    
