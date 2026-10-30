@@ -6,8 +6,7 @@ raise exceptions and return data; translating those into annotations
 and job outputs happens here.
 """
  
-from pbi_cicd.models import ChangeSet, Item
-from typing import TextIO
+from pbi_cicd.models import ChangeSet
 import json
 import os
 import sys
