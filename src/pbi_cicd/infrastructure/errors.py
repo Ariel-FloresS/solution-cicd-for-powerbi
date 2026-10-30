@@ -5,6 +5,7 @@ class PbiCicdError(Exception):
     """
     Base class for all exceptions raised by this project.
     """
+    exit_code: int = 1
 
 
 class RuleViolation(PbiCicdError):
@@ -27,5 +28,8 @@ class PipelineError(PbiCicdError):
     Raise this when the problem is the environment or configuration,
     not the PR content. The reader is whoever maintains the pipeline.
     """
+    
+    exit_code: int = 2
+
     def __init__(self, message:str)-> None:
         super().__init__(f"[PipelineError: {message}]")
