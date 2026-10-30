@@ -1,11 +1,11 @@
 from pbi_cicd.models import Item
-from pbi_cicd.rules.identity import check
+from pbi_cicd.rules.identity import find_collisions
  
 WS: str = "WORKSPACE_1"
 
 def test_report_and_model_sharing_a_name_is_not_a_collision() -> None:
     
-    collisions: list[list[Item]] = check({
+    collisions: list[list[Item]] = find_collisions({
         Item(f"{WS}/Sales.Report"): "Sales Report",
         Item(f"{WS}/Sales.SemanticModel"): "Sales Report",
     })
@@ -15,7 +15,7 @@ def test_report_and_model_sharing_a_name_is_not_a_collision() -> None:
 
 def test_two_reports_with_the_same_display_name_collide() -> None:
     
-    collisions: list[list[Item]] = check({
+    collisions: list[list[Item]] = find_collisions({
         Item(f"{WS}/Sales_Monthly.Report"): "Sales Report",
         Item(f"{WS}/Sales_Quarterly.Report"): "Sales Report",
     })
