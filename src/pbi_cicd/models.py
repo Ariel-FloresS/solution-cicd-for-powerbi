@@ -3,6 +3,7 @@ Domain models shared by every rule.
 """
 from dataclasses import dataclass, field
 from pbi_cicd.infrastructure.errors import PipelineError
+import json
 
 # Folder suffixes that mark a Fabric item, per the PBIP layout:https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-overview
 ITEM_SUFFIXES: tuple[str, str] = (".Report", ".SemanticModel")
@@ -66,7 +67,7 @@ class Item:
 class ChangeSet:
     """Scope detected for a pull request.
  
-    Produced by `changed.resolve` and passed to every other rule so they
+    Produced by `scope.resolve` and passed to every other rule so they
     only inspect what the pull request actually touched.
     """
  
@@ -84,4 +85,51 @@ class ChangeSet:
     @property
     def reports(self) -> list[Item]:
         return [i for i in self.items if i.is_report]
+
+def items_from_json(raw: str) -> list[Item]:
+    """Turn a JSON array of item paths, as the scope job emits them, into items."""
+    try:
+        paths: list[str] = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        raise PipelineError(f"Expected a JSON array, got {raw!r}") from exc
+
+    return [Item(path=path) for path in paths]
+
+@dataclass(frozen=True)
+class Finding:
+    """One problem a rule found in the pull request.
+
+    Rules return these instead of talking to GitHub themselves, so a rule
+    is only its logic: the command that runs it decides how findings are
+    annotated, written to the report, and turned into an exit code.
+    """
+
+    rule: str
+    message: str
+    file: str | None = None
+
+@dataclass(frozen=True)
+class GroupScore:
+    """The outcome of one score group."""
+
+    name: str
+    score: int
+    maximum: int
+    approved_min: int
+    conditional_min: int
+    level: str
+
+
+@dataclass(frozen=True)
+class Evaluation:
+    """The verdict and everything that produced it."""
+
+    level: str
+    groups: list[GroupScore]
+    blockers: list[str]
+    deducted: list[str]
+    informational: list[str]
+    excluded: list[str]
+    rule_errors: dict[str, str]
+    failing_errors: list[str]
  
