@@ -44,29 +44,16 @@ jobs:
 
       - uses: ./.github/actions/uv_sync
 
-     
-      # last. Every step carries  if : always() so one failure does not
-      # hide the rest — the author fixes everything in one push instead
-      # of discovering problems one at a time.
-      
-      # Without pipefail the step would take tee's exit code, which is
-      # always 0, and a broken rule would pass.
-      - name: "Rule 4: item folder names must use safe characters"
-        run: |
-          set -o pipefail
-          uv run python -m pbi_cicd.rules.name --models "$SEMANTIC_MODELS" --reports "$REPORTS" 2>&1 | tee -a "$RUNNER_TEMP/report-validate.txt"
 
-      - name: "Rule 5: display names must be unique within a workspace"
-        if: always()
+      # One command runs rules 4 to 6 and reports every problem they find,
+      # so the author fixes them all in one push.
+      - name: "Rules 4 to 6: validate artefacts"
         run: |
-          set -o pipefail
-          uv run python -m pbi_cicd.rules.identity --workspace "$WORKSPACE" 2>&1 | tee -a "$RUNNER_TEMP/report-validate.txt"
-
-      - name: "Rule 6: semantic models must not read from local paths"
-        if: always()
-        run: |
-          set -o pipefail
-          uv run python -m pbi_cicd.rules.sources --models "$SEMANTIC_MODELS" 2>&1 | tee -a "$RUNNER_TEMP/report-validate.txt"
+          uv run python -m pbi_cicd.validate \
+            --workspace "$WORKSPACE" \
+            --models "$SEMANTIC_MODELS" \
+            --reports "$REPORTS" \
+            --report "$RUNNER_TEMP/report-validate.txt"
 
       # Picked up by the gate job for the consolidated report.
       - name: Upload report section
