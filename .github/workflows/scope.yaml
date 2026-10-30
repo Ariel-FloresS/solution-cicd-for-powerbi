@@ -58,8 +58,9 @@ jobs:
         env:
           BASE_REF: ${{ inputs.base_ref }}
         run: |
-          set -o pipefail
-          uv run python -m pbi_cicd.rules.scope --base "$BASE_REF" 2>&1 | tee "$RUNNER_TEMP/report-scope.txt"
+          uv run python -m pbi_cicd.scope \
+            --base "$BASE_REF" \
+            --report "$RUNNER_TEMP/report-scope.txt"
 
       # Picked up by the gate job for the consolidated report.
       - name: Upload report section
