@@ -48,8 +48,7 @@ jobs:
             - scope
             - validate_artefacts
 
-        # A pull request touching only reports leaves semantic_models at '[]',
-        # and a matrix built from an empty list fails instead of skipping.
+        
         if: needs.scope.outputs.has_changes == 'true' && needs.scope.outputs.semantic_models != '[]'
 
         uses: ./.github/workflows/bpa_powerbi.yaml
@@ -57,9 +56,7 @@ jobs:
             semantic_models: ${{ needs.scope.outputs.semantic_models }}
             environment: prod
 
-    # Runs whatever happened above: a failure upstream is exactly when the
-    # report is needed. The permissions are the ceiling the gate's own
-    # jobs narrow down from.
+   
     gate:
 
         needs:
