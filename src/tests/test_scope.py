@@ -1,6 +1,6 @@
 from pbi_cicd.infrastructure.errors import PipelineError, RuleViolation
 from pbi_cicd.models import  ChangeSet, Item
-from pbi_cicd.rules.scope import resolve, resolve_removed
+from pbi_cicd.scope import resolve, resolve_removed
 import pytest
 
 WS : str= "WORKSPACE_1"
@@ -63,7 +63,7 @@ def test_paths_outside_a_workspace_are_ignored() -> None:
     and must not fail."""
     changes: ChangeSet = resolve([
         "README.md",
-        "src/pbi_cicd/rules/scope.py",
+        "src/pbi_cicd/scope.py",
         ".github/workflows/powerbi_ci.yaml",
     ])
  
