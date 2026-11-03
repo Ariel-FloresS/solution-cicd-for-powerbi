@@ -1,0 +1,230 @@
+name: Zip Intake
+run-name: "Zip intake - ${{ inputs.blob }}"
+
+
+on:
+  workflow_dispatch:
+    inputs:
+
+      blob:
+        description: Path of the zip in the container, as intake/WORKSPACE/Name.zip.
+        type: string
+        required: true
+
+      # The delivery's identifier, chosen by Data Factory. Every artifact of
+      # this delivery is named after it, in this run and in the validation
+      # run it starts, so a zip is tracked by its ID and never by a PR number.
+      request_id:
+        description: Unique identifier of this delivery, set by Data Factory.
+        type: string
+        required: true
+
+# Each job declares exactly what it needs.
+permissions: {}
+
+env:
+  BLOB: ${{ inputs.blob }}
+  REQUEST_ID: ${{ inputs.request_id }}
+  # The same name the validation run uses if it fails, so a failed delivery
+  # leaves exactly one report under this name, whichever stage failed.
+  REPORT: pipeline-report-${{ inputs.request_id }}
+  DELIVERY: delivery-${{ inputs.request_id }}
+
+jobs:
+
+  # The only job inside the internal network, kept to the minimum: no
+  # checkout, no Python dependencies, no write access to the repository.
+  fetch:
+    runs-on: nams-gh-managed-linux-small
+
+    # The service principal trusts this environment, not a branch, so the
+    # federated credential in Entra ID never has to change per branch.
+    environment: intake
+
+    permissions:
+      id-token: write
+
+    steps:
+
+      # The ID becomes part of artifact names, which reject / \ : < > | * ? "
+      - name: Check the request ID
+        run: |
+          if [[ ! "$REQUEST_ID" =~ ^[A-Za-z0-9._-]+$ ]]; then
+            echo "::error::request_id '$REQUEST_ID' may only use letters, digits, '.', '_' and '-'."
+            exit 1
+          fi
+
+      # OIDC: GitHub issues a short-lived token for this run; Entra ID trades
+      # it for access as the service principal. No secret is stored anywhere.
+      - name: Sign in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          allow-no-subscriptions: true
+
+      - name: Download the zip
+        env:
+          ACCOUNT: ${{ vars.INTAKE_STORAGE_ACCOUNT }}
+          CONTAINER: ${{ vars.INTAKE_CONTAINER }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/zip"
+          az storage blob download --auth-mode login --only-show-errors --no-progress \
+            --account-name "$ACCOUNT" --container-name "$CONTAINER" \
+            --name "$BLOB" --file "$RUNNER_TEMP/zip/delivery.zip"
+          echo "Downloaded $(du -h "$RUNNER_TEMP/zip/delivery.zip" | cut -f1)"
+
+      # cache.abf is a copy of the model's data. Removing it here means the
+      # data never leaves the internal network, not even as an artifact.
+      # zip exits 12 when nothing matched, which is the normal case.
+      - name: Strip the data cache
+        run: |
+          zip -d "$RUNNER_TEMP/zip/delivery.zip" '*cache.abf' '*localSettings.json' || [ $? -eq 12 ]
+
+      - name: Hand the zip over
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.DELIVERY }}
+          path: ${{ runner.temp }}/zip/delivery.zip
+          retention-days: 1
+
+      - name: Write the report
+        if: failure()
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          rule=$(printf '=%.0s' {1..72})
+          {
+            echo "$rule"
+            printf '%-52s%20s\n' "INTAKE" "FAILED"
+            echo "$rule"
+            echo "Zip: $BLOB"
+            echo "The zip could not be downloaded from the intake container."
+            echo "Run: $RUN_URL"
+          } > "$RUNNER_TEMP/$REPORT.txt"
+
+      - name: Upload the report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.REPORT }}
+          path: ${{ runner.temp }}/${{ env.REPORT }}.txt
+          retention-days: 2
+          if-no-files-found: ignore
+
+  # Everything that does not need the internal network runs here, on a
+  # regular runner: installing dependencies and writing to the repository.
+  intake:
+    needs: fetch
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      TARGET: ${{ vars.ZIP_TARGET_BRANCH || 'main' }}
+
+    steps:
+
+      - name: Checkout the target branch
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ env.TARGET }}
+          fetch-depth: 1
+
+      - uses: ./.github/actions/uv_sync
+
+      - name: Receive the zip
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.DELIVERY }}
+          path: ${{ runner.temp }}/zip
+
+      - name: Unpack the zip
+        id: unpack
+        env:
+          PREFIX: ${{ vars.INTAKE_PREFIX || 'intake' }}
+        run: |
+          uv run python -m pbi_cicd.unpack \
+            --blob "$BLOB" \
+            --zip "$RUNNER_TEMP/zip/delivery.zip" \
+            --prefix "$PREFIX" \
+            --target . \
+            --report "$RUNNER_TEMP/$REPORT.txt"
+
+      # GITHUB_TOKEN opens the pull request, so it triggers nothing on its
+      # own. The next step starts the Power BI pipeline explicitly.
+      - name: Open the pull request
+        id: open
+        env:
+          WORKSPACE: ${{ steps.unpack.outputs.workspace }}
+          DASHBOARD: ${{ steps.unpack.outputs.dashboard }}
+          SLUG: ${{ steps.unpack.outputs.slug }}
+        run: |
+          branch="upload/${SLUG}-${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add -- "$WORKSPACE"
+          git commit -m "Add $DASHBOARD to $WORKSPACE"
+          git push origin "$branch"
+          url=$(gh pr create --base "$TARGET" --head "$branch" --title "$DASHBOARD" \
+            --body "Delivered as \`$BLOB\` through the zip intake. Request ID: \`$REQUEST_ID\`.")
+          echo "number=${url##*/}" >> "$GITHUB_OUTPUT"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+
+      - name: Run the Power BI pipeline on it
+        env:
+          BRANCH: ${{ steps.open.outputs.branch }}
+          PR: ${{ steps.open.outputs.number }}
+        run: |
+          gh workflow run powerbi_ci.yaml --ref "$BRANCH" \
+            -f pr="$PR" -f base="$TARGET" -f request_id="$REQUEST_ID"
+
+      # unpack writes its own report when the zip is at fault. This covers
+      # a pull request that opened but whose pipeline would not start.
+      - name: Complete the report
+        if: failure()
+        env:
+          PR: ${{ steps.open.outputs.number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          file="$RUNNER_TEMP/$REPORT.txt"
+          [ -s "$file" ] && exit 0
+          rule=$(printf '=%.0s' {1..72})
+          {
+            echo "$rule"
+            printf '%-52s%20s\n' "INTAKE" "FAILED"
+            echo "$rule"
+            echo "Zip: $BLOB"
+            if [ -n "$PR" ]; then
+              echo "Unpacked into pull request #$PR, but the Power BI pipeline could not be started."
+            else
+              echo "The zip could not be unpacked."
+            fi
+            echo "Run: $RUN_URL"
+          } > "$file"
+
+      - name: Upload the report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.REPORT }}
+          path: ${{ runner.temp }}/${{ env.REPORT }}.txt
+          retention-days: 2
+          if-no-files-found: ignore
+
+      # Best effort, like the gate's cleanup: the zip expires in a day anyway.
+      - name: Delete the delivered zip
+        if: always()
+        continue-on-error: true
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts" \
+            --jq ".artifacts[] | select(.name == \"$DELIVERY\") | .id" |
+          while read -r id; do
+            gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$id"
+          done

@@ -11,6 +11,21 @@ on:
         type: string
         required: true
 
+      # Passed in rather than read from the event: a run dispatched by the
+      # zip intake has no pull_request event to read it from.
+      pr:
+        description: Number of the pull request to merge or close.
+        type: string
+        required: true
+
+      # Set when the pull request came from the zip intake. The report is then
+      # named after the delivery, the ID its sender knows; otherwise after the PR.
+      request_id:
+        description: Delivery ID from the zip intake, if any.
+        type: string
+        required: false
+        default: ""
+
 jobs:
 
   # The required status check for branch protection. Merging happens in a
@@ -24,7 +39,7 @@ jobs:
       actions: write
 
     env:
-      REPORT: pipeline-report-pr-${{ github.event.pull_request.number }}
+      REPORT: pipeline-report-${{ inputs.request_id || format('pr-{0}', inputs.pr) }}
 
     steps:
 
@@ -47,7 +62,7 @@ jobs:
       - name: Decide
         env:
           NEEDS: ${{ inputs.needs }}
-          PR: ${{ github.event.pull_request.number }}
+          PR: ${{ inputs.pr }}
         run: |
           uv run python -m pbi_cicd.gate \
             --needs "$NEEDS" \
@@ -94,7 +109,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          PR: ${{ github.event.pull_request.number }}
+          PR: ${{ inputs.pr }}
         run: gh pr merge "$PR" --squash --delete-branch
   
   close:
@@ -111,10 +126,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          PR: ${{ github.event.pull_request.number }}
+          PR: ${{ inputs.pr }}
+          REPORT: pipeline-report-${{ inputs.request_id || format('pr-{0}', inputs.pr) }}
 
         run: |
           gh pr close "$PR" --delete-branch --comment \
-          "Close by the Pipeline: at least one check failed. The Artefact of the report $PR has been saved in the artefact section."
-
-    
+          "Closed by the pipeline: at least one check failed. The details are in the $REPORT artifact of this run."

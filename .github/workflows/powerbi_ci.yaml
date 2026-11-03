@@ -1,6 +1,28 @@
 name: "Continous Integration For PowerBI"
+run-name: "Power BI CI - PR #${{ inputs.pr || github.event.pull_request.number }}"
  
 on:
+
+    workflow_dispatch:
+
+        inputs:
+
+            pr:
+                description: Number of the pull request this run validates.
+                type: string
+                required: true
+
+            base:
+                description: Branch the pull request targets.
+                type: string
+                required: false
+                default: main
+
+            request_id:
+                description: Delivery ID from the zip intake; names the report.
+                type: string
+                required: false
+                default: ""
  
     pull_request:
  
@@ -28,7 +50,7 @@ jobs:
  
         uses: ./.github/workflows/scope.yaml
         with:
-            base_ref: origin/${{ github.base_ref }}
+            base_ref: origin/${{ github.base_ref || inputs.base || 'main' }}
        
     validate_artefacts:
  
@@ -74,3 +96,5 @@ jobs:
         uses: ./.github/workflows/gate_powerbi.yaml
         with:
             needs: ${{ toJSON(needs) }}
+            pr: ${{ inputs.pr || github.event.pull_request.number }}
+            request_id: ${{ inputs.request_id }}
