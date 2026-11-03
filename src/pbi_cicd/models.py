@@ -108,3 +108,16 @@ class Evaluation:
     excluded: list[str]
     rule_errors: dict[str, str]
     failing_errors: list[str]
+
+@dataclass(frozen=True)
+class Delivery:
+    """What a zip contains, mapped to where each file goes."""
+
+    workspace: str
+    dashboard: str
+    # Name inside the archive -> path relative to the workspace folder.
+    files: dict[str, str]
+
+    @property
+    def folders(self) -> tuple[str, str]:
+        return f"{self.dashboard}.Report", f"{self.dashboard}.SemanticModel"

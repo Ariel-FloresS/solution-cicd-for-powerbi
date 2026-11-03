@@ -6,8 +6,7 @@ raise exceptions and return data; translating those into annotations
 and job outputs happens here.
 """
  
-from pbi_cicd.models import ChangeSet, Item
-from typing import TextIO
+from pbi_cicd.models import ChangeSet
 import json
 import os
 import re
@@ -26,27 +25,32 @@ def write_outputs(changes: ChangeSet) -> None:
  
     Lists are serialized as JSON because `strategy.matrix` in the bpa
     job consumes them directly.
- 
-    Appends rather than overwrites: the runner reuses the same file
-    across every step of a job.
     """
-    target: str = os.environ.get("GITHUB_OUTPUT")
-    if not target:
-        return
- 
-    values: dict[str, str] = {
+    set_outputs({
         "workspace": changes.workspace or "",
         "has_changes": str(changes.has_changes).lower(),
         "semantic_models": json.dumps([i.path for i in changes.semantic_models]),
         "reports": json.dumps([i.path for i in changes.reports]),
-    }
- 
+    })
+
+
+def set_outputs(values: dict[str, str]) -> None:
+    """Publish single-line values as job outputs.
+
+    Appends rather than overwrites: the runner reuses the same file
+    across every step of a job.
+    """
+    target: str | None = os.environ.get("GITHUB_OUTPUT")
+    if not target:
+        return
+
     with open(target, "a", encoding="utf-8") as handle:
         key: str
         value: str
         for key, value in values.items():
             handle.write(f"{key}={value}\n")
- 
+
+
 def _escape(message: object) -> str:
     """
     Escape the characters the workflow command format Runner.

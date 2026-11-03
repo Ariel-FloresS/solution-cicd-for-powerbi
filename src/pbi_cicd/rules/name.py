@@ -29,7 +29,7 @@ def suggest(name: str) -> str:
  
     cleaned: str = re.sub(r"[^A-Za-z0-9_-]+", "_", folded).strip("_")
  
-    return cleaned or "renamed item"
+    return cleaned or "renamed_item"
 
 def check(items: list[Item]) -> list[tuple[Item, str]]:
     """Return one entry per item whose name uses forbidden characters"""
@@ -118,5 +118,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
-
