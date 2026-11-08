@@ -1,5 +1,3 @@
-
-
 from pbi_cicd.infrastructure.errors import PipelineError
 from pbi_cicd.rules.name import ALLOWED_NAME, suggest
 from pbi_cicd.unpack import extract, locate, plan
@@ -21,6 +19,15 @@ def test_the_blob_path_names_the_workspace_and_the_dashboard() -> None:
     ):
         with pytest.raises(PipelineError):
             locate(blob, "intake")
+
+
+def test_a_dashboard_name_rule_4_would_reject_is_refused_with_a_suggestion() -> None:
+    """Zips made on Windows garble accented names, so the zip's contents cannot
+    be trusted to explain the problem. The blob path can."""
+    with pytest.raises(PipelineError, match="'Ventas'"):
+        locate("intake/WORKSPACE_1/Ventás.zip", "intake")
+    with pytest.raises(PipelineError, match="'Ventas_Mensual'"):
+        locate("intake/WORKSPACE_1/Ventas Mensual.zip", "intake")
 
 
 def test_noise_is_dropped_and_a_wrapper_folder_is_tolerated() -> None:

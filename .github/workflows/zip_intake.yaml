@@ -185,8 +185,7 @@ jobs:
           gh workflow run powerbi_ci.yaml --ref "$BRANCH" \
             -f pr="$PR" -f base="$TARGET" -f request_id="$REQUEST_ID"
 
-      # unpack writes its own report when the zip is at fault. This covers
-      # a pull request that opened but whose pipeline would not start.
+  
       - name: Complete the report
         if: failure()
         env:
@@ -194,7 +193,7 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           file="$RUNNER_TEMP/$REPORT.txt"
-          [ -s "$file" ] && exit 0
+          grep -qE '^INTAKE +FAILED$' "$file" 2>/dev/null && exit 0
           rule=$(printf '=%.0s' {1..72})
           {
             echo "$rule"
@@ -204,7 +203,7 @@ jobs:
             if [ -n "$PR" ]; then
               echo "Unpacked into pull request #$PR, but the Power BI pipeline could not be started."
             else
-              echo "The zip could not be unpacked."
+              echo "The zip could not be turned into a pull request. The run log shows which step failed."
             fi
             echo "Run: $RUN_URL"
           } > "$file"

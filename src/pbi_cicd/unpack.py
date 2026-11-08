@@ -12,8 +12,7 @@ goes, and its file name says what the dashboard is called.
 from pbi_cicd.infrastructure.errors import PipelineError
 from pbi_cicd.infrastructure.output import annotate_error, set_outputs
 from pbi_cicd.models import ITEM_SUFFIXES, Delivery
-from pbi_cicd.rules.name import suggest
-from dataclasses import dataclass
+from pbi_cicd.rules.name import ALLOWED_NAME, suggest
 from pathlib import Path, PurePosixPath
 import argparse
 import shutil
@@ -38,7 +37,17 @@ def locate(blob: str, prefix: str) -> tuple[str, str]:
             "segment says where the dashboard goes, so it cannot be missing or nested."
         )
 
-    return parts[1], PurePosixPath(parts[2]).stem
+    dashboard: str = PurePosixPath(parts[2]).stem
+
+    if not ALLOWED_NAME.match(dashboard):
+        raise PipelineError(
+            f"Dashboard name {dashboard!r} uses characters that break the tools "
+            f"downstream. Rename it to something like {suggest(dashboard)!r} and "
+            "export again: the zip and its .Report and .SemanticModel folders "
+            "must all use the new name."
+        )
+
+    return parts[1], dashboard
 
 
 def plan(workspace: str, dashboard: str, names: list[str]) -> Delivery:
