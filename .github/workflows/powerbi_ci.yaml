@@ -92,6 +92,7 @@ jobs:
             contents: write
             pull-requests: write
             actions: write
+            id-token: write
 
         uses: ./.github/workflows/gate_powerbi.yaml
         with:

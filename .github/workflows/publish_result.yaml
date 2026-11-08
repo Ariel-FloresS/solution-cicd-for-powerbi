@@ -1,0 +1,125 @@
+name: Publish Result
+
+# Writes the outcome of a zip delivery to the results folder of the storage
+# container, where Data Factory picks it up: success-<id>.zip when the
+# dashboard was merged, failure-<id>.zip with the report otherwise. Each zip
+# holds one .txt named like it.
+#
+# Called from two places: the gate, once a delivery has been validated, and
+# the zip intake, when a delivery fails before it ever reaches validation.
+
+on:
+  workflow_call:
+
+    inputs:
+
+      request_id:
+        description: Delivery ID, set by Data Factory.
+        type: string
+        required: true
+
+      outcome:
+        description: success or failure.
+        type: string
+        required: true
+
+      dashboard:
+        description: Dashboard name, for the success message.
+        type: string
+        required: false
+        default: ""
+
+      # Uploaded earlier in the same run. Missing when a job died before
+      # writing it; the failure zip then explains that instead.
+      report_artifact:
+        description: Artifact holding the failure report .txt.
+        type: string
+        required: false
+        default: ""
+
+jobs:
+
+
+  publish:
+    runs-on: nams-gh-managed-linux-small
+    environment: intake
+
+    permissions:
+      id-token: write
+
+    env:
+      REQUEST_ID: ${{ inputs.request_id }}
+      OUTCOME: ${{ inputs.outcome }}
+      NAME: ${{ inputs.outcome }}-${{ inputs.request_id }}
+
+    steps:
+
+      - name: Check the inputs
+        run: |
+          if [[ "$OUTCOME" != "success" && "$OUTCOME" != "failure" ]]; then
+            echo "::error::outcome must be success or failure, got '$OUTCOME'."
+            exit 1
+          fi
+          if [[ ! "$REQUEST_ID" =~ ^[A-Za-z0-9._-]+$ ]]; then
+            echo "::error::request_id '$REQUEST_ID' may only use letters, digits, '.', '_' and '-'."
+            exit 1
+          fi
+
+      - name: Receive the failure report
+        if: inputs.outcome == 'failure' && inputs.report_artifact != ''
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.report_artifact }}
+          path: ${{ runner.temp }}/report
+
+      - name: Build the zip
+        env:
+          DASHBOARD: ${{ inputs.dashboard }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          out="$RUNNER_TEMP/out"
+          mkdir -p "$out"
+          txt="$out/$NAME.txt"
+
+          if [[ "$OUTCOME" == "success" ]]; then
+            echo "El dashboard ${DASHBOARD:-de la entrega $REQUEST_ID} ha pasado todos los test" > "$txt"
+          else
+            report=$(find "$RUNNER_TEMP/report" -name '*.txt' 2>/dev/null | head -n 1)
+            if [[ -n "$report" ]]; then
+              cp "$report" "$txt"
+            else
+              # No report means either a job died before writing one, or every
+              # check passed and the merge itself did not complete.
+              {
+                echo "The delivery did not complete, and no validation report was written."
+                echo "Either a job stopped before writing its report, or every check passed"
+                echo "but the merge to main did not complete. The run log has the cause."
+                echo
+                echo "Request ID: $REQUEST_ID"
+                echo "Run: $RUN_URL"
+              } > "$txt"
+            fi
+          fi
+
+          (cd "$out" && zip -q "$NAME.zip" "$NAME.txt")
+          echo "Built $NAME.zip"
+
+      - name: Sign in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          allow-no-subscriptions: true
+
+      
+      - name: Upload the result
+        env:
+          ACCOUNT: ${{ vars.INTAKE_STORAGE_ACCOUNT }}
+          CONTAINER: ${{ vars.INTAKE_CONTAINER }}
+          PREFIX: ${{ vars.RESULTS_PREFIX || 'test_results' }}
+        run: |
+          az storage blob upload --auth-mode login --only-show-errors --no-progress --overwrite \
+            --account-name "$ACCOUNT" --container-name "$CONTAINER" \
+            --name "$PREFIX/$NAME.zip" --file "$RUNNER_TEMP/out/$NAME.zip"
+          echo "Uploaded $PREFIX/$NAME.zip"

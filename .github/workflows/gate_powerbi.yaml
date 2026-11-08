@@ -11,15 +11,13 @@ on:
         type: string
         required: true
 
-      # Passed in rather than read from the event: a run dispatched by the
-      # zip intake has no pull_request event to read it from.
+      
       pr:
         description: Number of the pull request to merge or close.
         type: string
         required: true
 
-      # Set when the pull request came from the zip intake. The report is then
-      # named after the delivery, the ID its sender knows; otherwise after the PR.
+    
       request_id:
         description: Delivery ID from the zip intake, if any.
         type: string
@@ -103,7 +101,20 @@ jobs:
       contents: write
       pull-requests: write
 
+    outputs:
+      dashboard: ${{ steps.title.outputs.dashboard }}
+
     steps:
+
+      # The zip intake titles each pull request after its dashboard. Read
+      # before merging, for the success message the publish job writes.
+      - name: Read the dashboard name
+        id: title
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR: ${{ inputs.pr }}
+        run: echo "dashboard=$(gh pr view "$PR" --json title --jq .title)" >> "$GITHUB_OUTPUT"
 
       - name: Squash merge the pull request
         env:
@@ -132,3 +143,21 @@ jobs:
         run: |
           gh pr close "$PR" --delete-branch --comment \
           "Closed by the pipeline: at least one check failed. The details are in the $REPORT artifact of this run."
+
+  # Tells Data Factory how a delivery ended. Success means merged, not merely
+  # validated: a dashboard that passed every check but could not be merged
+  # is a failure for whoever is waiting on it. Pull requests opened by people
+  # carry no request ID and publish nothing.
+  publish:
+    needs: [evaluate, merge, close]
+    if: always() && inputs.request_id != ''
+
+    permissions:
+      id-token: write
+
+    uses: ./.github/workflows/publish_result.yaml
+    with:
+      request_id: ${{ inputs.request_id }}
+      outcome: ${{ needs.merge.result == 'success' && 'success' || 'failure' }}
+      dashboard: ${{ needs.merge.outputs.dashboard }}
+      report_artifact: pipeline-report-${{ inputs.request_id }}

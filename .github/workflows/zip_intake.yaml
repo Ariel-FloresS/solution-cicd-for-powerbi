@@ -228,3 +228,18 @@ jobs:
           while read -r id; do
             gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$id"
           done
+
+  # A delivery that fails here never reaches validation, so the gate never
+  # publishes for it. Without this job, Data Factory would wait forever.
+  publish:
+    needs: [fetch, intake]
+    if: failure()
+
+    permissions:
+      id-token: write
+
+    uses: ./.github/workflows/publish_result.yaml
+    with:
+      request_id: ${{ inputs.request_id }}
+      outcome: failure
+      report_artifact: pipeline-report-${{ inputs.request_id }}
